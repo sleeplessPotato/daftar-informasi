@@ -3,120 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Unggah Dokumen</title>
+    <title>Dashboard Admin Terpadu</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --text-dark: #111827;
-            --text-light: #6b7280;
-            --bg-body: #f8fafc;
+            --primary: #2563eb; --primary-hover: #1d4ed8;
+            --success: #10b981; --success-hover: #059669;
+            --danger: #ef4444; --danger-hover: #dc2626;
+            --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+            --text-dark: #111827; --text-light: #6b7280;
         }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: var(--text-dark); margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        
+        .sync-banner { background-color: #eff6ff; border: 1px dashed #bfdbfe; padding: 16px; border-radius: 8px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Navigasi Tab */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--gray-200); padding-bottom: 8px; }
+        .tab-btn { background: none; border: none; padding: 10px 20px; font-weight: 600; color: var(--text-light); border-radius: 6px; cursor: pointer; }
+        .tab-btn.active { background: var(--primary); color: white; }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-body); color: var(--text-dark); margin: 0; padding: 40px 20px; line-height: 1.5; }
-        .container { max-width: 600px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+        @media (min-width: 768px) { .layout-grid { grid-template-columns: 340px 1fr; } }
         
-        h2 { margin-top: 0; border-bottom: 2px solid var(--gray-200); padding-bottom: 16px; color: var(--text-dark); }
+        .form-card { background: #fafafa; border: 1px solid var(--gray-200); padding: 16px; border-radius: 8px; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+        input[type="text"], select, input[type="date"], textarea { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; }
         
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark); }
-        
-        input[type="text"], select, input[type="file"] { 
-            width: 100%; 
-            padding: 12px 14px; 
-            border: 1px solid #d1d5db; 
-            border-radius: 6px; 
-            font-size: 0.95rem; 
-            outline: none; 
-            box-sizing: border-box;
-            transition: border-color 0.2s; 
-        }
-        input[type="text"]:focus, select:focus, input[type="file"]:focus { border-color: var(--primary); }
-        
-        /* Modifikasi input file agar terlihat lebih rapi */
-        input[type="file"] { background-color: var(--gray-100); cursor: pointer; }
-        
-        button { 
-            width: 100%; 
-            cursor: pointer; 
-            padding: 14px; 
-            border: none; 
-            border-radius: 6px; 
-            font-weight: 600; 
-            font-size: 1rem;
-            background-color: var(--primary); 
-            color: white; 
-            transition: background-color 0.2s; 
-            margin-top: 10px;
-        }
-        button:hover { background-color: var(--primary-hover); }
+        button { cursor: pointer; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 600; transition: 0.2s; }
+        .btn-blue { background: var(--primary); color: white; width: 100%; }
+        .btn-green { background: var(--success); color: white; }
+        .btn-red { background: var(--danger); color: white; padding: 6px 12px; font-size: 0.8rem; }
+        .btn-cancel { background: #9ca3af; color: white; width: 100%; margin-top: 8px; }
+        .hidden { display: none !important; }
 
-        .nav-link { display: inline-block; margin-top: 20px; color: var(--text-light); text-decoration: none; font-size: 0.9rem; }
-        .nav-link:hover { color: var(--primary); text-decoration: underline; }
+        .table-wrap { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 8px; background: white; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 12px; border-bottom: 1px solid var(--gray-200); }
+        th { background: var(--gray-100); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Panel Admin - Unggah Dokumen Baru</h2>
-    
-    <!-- 
-      Atribut action="/api/upload" menargetkan endpoint Node.js.
-      Atribut enctype="multipart/form-data" WAJIB ada untuk pengiriman file fisik.
-    -->
-    <form action="/api/upload" method="POST" enctype="multipart/form-data">
-        
-        <div class="form-group">
-            <label for="docName">Nama Dokumen</label>
-            <input type="text" id="docName" name="docName" placeholder="Contoh: SK Mutasi Tahun 2026" required>
+    <!-- BANNER PUSH UTAMA -->
+    <div class="sync-banner">
+        <div>
+            <strong style="color: #1e40af; display: block; font-size: 1.1rem;">Pusat Manajemen Katalog Lokal</strong>
+            <span style="font-size: 0.85rem; color: var(--text-light);">Kelola struktur kategori dan data dokumen secara real-time. Akhiri sesi dengan menekan tombol push.</span>
         </div>
+        <button id="btn-push" class="btn-green" style="padding: 12px 24px;" onclick="publishToCloud()">🚀 Push Ke Live Website</button>
+    </div>
 
-        <div class="form-group">
-            <label for="categoryId">Kategori Dokumen</label>
-            <select id="categoryId" name="categoryId" required>
-                <option value="">Memuat data kategori...</option>
-            </select>
+    <!-- SISTEM TAB SWITCHER -->
+    <div class="tabs">
+        <button id="tab-btn-doc" class="tab-btn active" onclick="switchTab('doc')">📁 Kelola Dokumen</button>
+        <button id="tab-btn-cat" class="tab-btn" onclick="switchTab('cat')">🌿 Kelola Kategori</button>
+    </div>
+
+    <!-- ================= TAB 1: MANAJEMEN DOKUMEN ================= -->
+    <div id="section-doc" class="layout-grid">
+        <div>
+            <div class="form-card">
+                <h3 id="doc-form-title">Tambah Dokumen</h3>
+                <form id="doc-form" onsubmit="saveDocument(event)">
+                    <input type="hidden" id="edit-doc-id">
+                    <div class="form-group"><label>Nama Dokumen</label><input type="text" id="docName" required></div>
+                    <div class="form-group"><label>Kategori</label><select id="docCatId" required><option value="">-- Pilih Kategori --</option></select></div>
+                    <div class="form-group"><label>Tanggal</label><input type="date" id="docDate" required></div>
+                    <div class="form-group" id="file-container"><label>File Berkas</label><input type="file" id="document" required></div>
+                    <button type="submit" class="btn-blue" id="btn-submit-doc">Simpan Dokumen</button>
+                    <button type="button" class="btn-cancel hidden" id="btn-clear-doc" onclick="clearDocForm()">Batal</button>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="document">Pilih File (PDF, DOCX, dll)</label>
-            <input type="file" id="document" name="document" required>
+        <div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Nama Dokumen</th><th>Kategori</th><th>Info</th><th style="text-align:right;">Aksi</th></tr></thead>
+                    <tbody id="table-body-doc"></tbody>
+                </table>
+            </div>
         </div>
+    </div>
 
-        <button type="submit">Unggah Dokumen</button>
-    </form>
-
-    <a href="/index.html" class="nav-link">← Lihat Katalog Publik (index.html)</a>
+    <!-- ================= TAB 2: MANAJEMEN KATEGORI ================= -->
+    <div id="section-cat" class="layout-grid hidden">
+        <div>
+            <div class="form-card">
+                <h3 id="cat-form-title">Tambah Kategori Baru</h3>
+                <form id="cat-form" onsubmit="saveCategory(event)">
+                    <input type="hidden" id="edit-cat-id">
+                    <div class="form-group"><label>Nama Kategori</label><input type="text" id="catName" required></div>
+                    <div class="form-group"><label>Deskripsi</label><textarea id="catDesc" rows="3" required></textarea></div>
+                    <button type="submit" class="btn-blue" id="btn-submit-cat">Simpan Kategori</button>
+                    <button type="button" class="btn-cancel hidden" id="btn-clear-cat" onclick="clearCatForm()">Batal</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Nama Kategori</th><th>Deskripsi</th><th>Tanggal Dibuat</th><th style="text-align:right;">Aksi</th></tr></thead>
+                    <tbody id="table-body-cat"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // Logika untuk mengisi opsi kategori secara dinamis dari data.json
-    document.addEventListener('DOMContentLoaded', () => {
-        fetch('/data.json')
-            .then(response => {
-                if (!response.ok) throw new Error('Gagal memuat data.json');
-                return response.json();
-            })
-            .then(data => {
-                const selectElement = document.getElementById('categoryId');
-                selectElement.innerHTML = '<option value="">-- Pilih Kategori --</option>'; // Reset
-                
-                // Looping data kategori dan masukkan ke dropdown form
-                data.categories.forEach(cat => {
-                    const option = document.createElement('option');
-                    option.value = cat.id; // Ini yang akan dikirim ke server (req.body.categoryId)
-                    option.textContent = cat.name;
-                    selectElement.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching categories:', error);
-                document.getElementById('categoryId').innerHTML = '<option value="">Gagal memuat kategori. Pastikan server lokal berjalan.</option>';
-            });
-    });
-</script>
+    let globalCategories = [];
+    let activeTab = 'doc';
 
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('docDate').value = new Date().toISOString().split('T')[0];
+        initData();
+    });
+
+    function switchTab(tab) {
+        activeTab = tab;
+        document.getElementById('section-doc').classList.toggle('hidden', tab !== 'doc');
+        document.getElementById('section-cat').classList.toggle('hidden', tab !== 'cat');
+        document.getElementById('tab-btn-doc').classList.toggle('active', tab === 'doc');
+        document.getElementById('tab-btn-cat').classList.toggle('active', tab === 'cat');
+    }
+
+    function initData() {
+        // Ambil Master Kategori
+        fetch('/api/categories').then(res => res.json()).then(cats => {
+            globalCategories = cats;
+            
+            // Render Dropdown Pilihan Kategori pada form Dokumen
+            const select = document.getElementById('docCatId');
+            select.innerHTML = '<option value="">-- Pilih Kategori --</option>';
+            cats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id; opt.textContent = c.name;
+                select.appendChild(opt);
+            });
+
+            renderCategoriesTable(cats);
+            return fetch('/api/documents');
+        }).then(res => res.json()).then(docs => {
+            renderDocumentsTable(docs);
+        });
+    }
+
+    // --- LOGIKA UTAMA: CRUD KATEGORI ---
+    function renderCategoriesTable(cats) {
+        const tbody = document.getElementById('table-body-cat');
+        tbody.innerHTML = cats.length === 0 ? '<tr><td colspan="4" style="text-align:center;">Belum ada kategori.</td></tr>' : '';
+        cats.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${c.name}</strong><br><small style="color:var(--text-light)">${c.id}</small></td>
+                <td>${c.desc}</td>
+                <td>${c.date}</td>
+                <td style="text-align:right; white-space:nowrap;">
+                    <button class="btn-green" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditCat('${c.id}','${c.name}','${c.desc}')">✏️ Edit</button>
+                    <button class="btn-red" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteCat('${c.id}')">❌ Hapus</button>
+                </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function saveCategory(e) {
+        e.preventDefault();
+        const id = document.getElementById('edit-cat-id').value;
+        const payload = { name: document.getElementById('catName').value, desc: document.getElementById('catDesc').value };
+        
+        const url = id ? `/api/categories/${id}` : '/api/categories';
+        const method = id ? 'PUT' : 'POST';
+
+        fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).then(res => res.json()).then(res => {
+            alert(res.message); clearCatForm(); initData();
+        });
+    }
+
+    function openEditCat(id, name, desc) {
+        document.getElementById('edit-cat-id').value = id;
+        document.getElementById('catName').value = name;
+        document.getElementById('catDesc').value = desc;
+        document.getElementById('cat-form-title').innerText = "Edit Kategori";
+        document.getElementById('btn-submit-cat').innerText = "Perbarui Kategori";
+        document.getElementById('btn-clear-cat').classList.remove('hidden');
+    }
+
+    function clearCatForm() {
+        document.getElementById('edit-cat-id').value = '';
+        document.getElementById('cat-form').reset();
+        document.getElementById('cat-form-title').innerText = "Tambah Kategori Baru";
+        document.getElementById('btn-submit-cat').innerText = "Simpan Kategori";
+        document.getElementById('btn-clear-cat').classList.add('hidden');
+    }
+
+    function deleteCat(id) {
+        if(confirm('⚠️ PERINGATAN: Menghapus kategori ini akan ikut menghapus SEMUA dokumen yang terikat di dalamnya secara permanen! Lanjutkan?')) {
+            fetch(`/api/categories/${id}`, { method: 'DELETE' }).then(res => res.json()).then(res => {
+                alert(res.message); initData();
+            });
+        }
+    }
+
+    // --- LOGIKA UTAMA: CRUD DOKUMEN ---
+    function renderDocumentsTable(docs) {
+        const tbody = document.getElementById('table-body-doc');
+        tbody.innerHTML = docs.length === 0 ? '<tr><td colspan="4" style="text-align:center;">Belum ada dokumen.</td></tr>' : '';
+        docs.forEach(d => {
+            const cat = globalCategories.find(c => c.id === d.categoryId);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${d.name}</strong><br><small style="color:var(--text-light)">${d.id}</small></td>
+                <td><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:4px; font-size:12px;">${cat ? cat.name : d.categoryId}</span></td>
+                <td>💾 ${d.size}<br><small style="color:var(--text-light)">📅 ${d.date}</small></td>
+                <td style="text-align:right; white-space:nowrap;">
+                    <button class="btn-green" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditDoc('${d.id}','${d.name}','${d.categoryId}','${d.date}')">✏️ Edit</button>
+                    <button class="btn-red" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteDoc('${d.id}')">❌ Hapus</button>
+                </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function saveDocument(e) {
+        e.preventDefault();
+        const id = document.getElementById('edit-doc-id').value;
+
+        if (id) {
+            const payload = {
+                name: document.getElementById('docName').value,
+                categoryId: document.getElementById('docCatId').value,
+                date: document.getElementById('docDate').value
+            };
+            fetch(`/api/documents/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(res => res.json()).then(res => { alert(res.message); clearDocForm(); initData(); });
+        } else {
+            const formData = new FormData();
+            formData.append('docName', document.getElementById('docName').value);
+            formData.append('categoryId', document.getElementById('docCatId').value);
+            formData.append('docDate', document.getElementById('docDate').value);
+            formData.append('document', document.getElementById('document').files[0]);
+
+            fetch('/api/documents', { method: 'POST', body: formData })
+                .then(res => res.json()).then(res => { alert(res.message); clearDocForm(); initData(); });
+        }
+    }
+
+    function openEditDoc(id, name, catId, date) {
+        document.getElementById('edit-doc-id').value = id;
+        document.getElementById('docName').value = name;
+        document.getElementById('docCatId').value = catId;
+        document.getElementById('docDate').value = date;
+        document.getElementById('file-container').classList.add('hidden');
+        document.getElementById('document').required = false;
+        document.getElementById('doc-form-title').innerText = "Edit Informasi Dokumen";
+        document.getElementById('btn-submit-doc').innerText = "Perbarui Dokumen";
+        document.getElementById('btn-clear-doc').classList.remove('hidden');
+    }
+
+    function clearDocForm() {
+        document.getElementById('edit-doc-id').value = '';
+        document.getElementById('doc-form').reset();
+        document.getElementById('docDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('file-container').classList.remove('hidden');
+        document.getElementById('document').required = true;
+        document.getElementById('doc-form-title').innerText = "Tambah Dokumen";
+        document.getElementById('btn-submit-doc').innerText = "Simpan Dokumen";
+        document.getElementById('btn-clear-doc').classList.add('hidden');
+    }
+
+    function deleteDoc(id) {
+        if(confirm('Apakah Anda yakin ingin menghapus dokumen ini beserta file fisiknya secara permanen?')) {
+            fetch(`/api/documents/${id}`, { method: 'DELETE' }).then(res => res.json()).then(res => {
+                alert(res.message); initData();
+            });
+        }
+    }
+
+    // --- GLOBAL: PUSH TO GITHUB ---
+    function publishToCloud() {
+        const btn = document.getElementById('btn-push');
+        btn.disabled = true; btn.innerText = "⏳ Memproses Komit Git...";
+        
+        fetch('/api/publish', { method: 'POST' }).then(res => res.json()).then(data => {
+            alert(data.success ? '🎉 Sukses disinkronkan ke live website!' : `❌ Gagal: ${data.message}`);
+        }).finally(() => {
+            btn.disabled = false; btn.innerText = "🚀 Push Ke Live Website";
+        });
+    }
+</script>
 </body>
 </html>
