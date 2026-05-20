@@ -143,10 +143,29 @@ app.delete('/api/documents/:id', (req, res) => {
 // ==========================================
 app.post('/api/publish', (req, res) => {
     const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
-    const gitCommand = `git add . && git commit -m "Publish: Management data komprehensif [${timestamp}]" && git push`;
-    exec(gitCommand, { cwd: __dirname }, (error) => {
-        if (error) return res.status(500).json({ success: false, message: error.message });
-        res.json({ success: true, message: 'Berhasil didorong ke cloud.' });
+    
+    // Gunakan git status terlebih dahulu untuk memeriksa apakah ada perubahan file
+    exec('git status --porcelain', { cwd: __dirname }, (statusErr, stdout) => {
+        if (statusErr) {
+            return res.status(500).json({ success: false, message: `Git Status Error: ${statusErr.message}` });
+        }
+        
+        // Jika stdout kosong, berarti tidak ada perubahan data lokal yang perlu di-push
+        if (!stdout.trim()) {
+            return res.json({ success: true, message: 'Tidak ada perubahan data baru yang perlu disinkronkan.' });
+        }
+        
+        // Jika ada perubahan, baru jalankan rantai perintah Git GitOps
+        const commitMessage = `Publish: Management data komprehensif [${timestamp}]`;
+        const gitCommand = `git add . && git commit -m "${commitMessage}" && git push`;
+        
+        exec(gitCommand, { cwd: __dirname }, (error) => {
+            if (error) {
+                console.error(`Gagal melakukan push: ${error.message}`);
+                return res.status(500).json({ success: false, message: `Gagal Push Jaringan: Pastikan kredensial login Git sudah tersimpan.` });
+            }
+            res.json({ success: true, message: 'Berhasil didorong ke cloud.' });
+        });
     });
 });
 
