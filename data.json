@@ -71,6 +71,12 @@
       "name": "Data Statistik",
       "desc": "Laporan data analitik dan statistik bulanan.",
       "date": "2026-05-19"
+    },
+    {
+      "id": "CAT-1779263506833",
+      "name": "Laporan Tahunan",
+      "desc": "Laporan Tahunan Balai POM di Lubuklinggau",
+      "date": "2026-05-20"
     }
   ],
   "documents": [
