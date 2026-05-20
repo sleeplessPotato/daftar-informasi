@@ -1,0 +1,136 @@
+{
+  "categories": [
+    {
+      "id": "C01",
+      "name": "Regulasi Kepegawaian",
+      "desc": "Dokumen aturan dan kebijakan kepegawaian internal.",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "C02",
+      "name": "Laporan Keuangan",
+      "desc": "Arsip laporan keuangan dan anggaran tahunan.",
+      "date": "2026-04-15"
+    },
+    {
+      "id": "C03",
+      "name": "Aset & Inventaris",
+      "desc": "Daftar inventaris IT dan aset kantor lainnya.",
+      "date": "2026-01-20"
+    },
+    {
+      "id": "C04",
+      "name": "SOP Operasional",
+      "desc": "Standar Operasional Prosedur untuk pelayanan.",
+      "date": "2025-12-05"
+    },
+    {
+      "id": "C05",
+      "name": "Dokumen Pengadaan",
+      "desc": "Arsip tender, vendor, dan pengadaan barang/jasa.",
+      "date": "2026-03-30"
+    },
+    {
+      "id": "C06",
+      "name": "Audit Internal",
+      "desc": "Hasil audit berkala, temuan, dan tindak lanjut.",
+      "date": "2026-02-28"
+    },
+    {
+      "id": "C07",
+      "name": "Materi Pelatihan",
+      "desc": "Modul dan presentasi untuk peningkatan SDM.",
+      "date": "2025-11-12"
+    },
+    {
+      "id": "C08",
+      "name": "Surat Edaran",
+      "desc": "Kumpulan surat edaran resmi dari instansi pusat.",
+      "date": "2026-05-01"
+    },
+    {
+      "id": "C09",
+      "name": "Notulensi Rapat",
+      "desc": "Catatan resmi hasil rapat pleno dan divisi.",
+      "date": "2026-05-18"
+    },
+    {
+      "id": "C10",
+      "name": "Dokumen Legalitas",
+      "desc": "MoU, perjanjian kerja sama, dan kontrak.",
+      "date": "2025-08-22"
+    },
+    {
+      "id": "C11",
+      "name": "Arsip Publikasi",
+      "desc": "Kumpulan siaran pers dan materi media sosial.",
+      "date": "2026-04-05"
+    },
+    {
+      "id": "C12",
+      "name": "Data Statistik",
+      "desc": "Laporan data analitik dan statistik bulanan.",
+      "date": "2026-05-19"
+    }
+  ],
+  "documents": [
+    {
+      "id": "DOC-C01-001",
+      "categoryId": "C01",
+      "name": "SK Kedisiplinan 2026",
+      "date": "2026-01-10",
+      "size": "1.2 MB"
+    },
+    {
+      "id": "DOC-C01-002",
+      "categoryId": "C01",
+      "name": "Revisi Aturan Cuti",
+      "date": "2026-03-15",
+      "size": "800 KB"
+    },
+    {
+      "id": "DOC-C01-003",
+      "categoryId": "C01",
+      "name": "Panduan Kinerja PNS",
+      "date": "2026-04-20",
+      "size": "2.1 MB"
+    },
+    {
+      "id": "DOC-C03-001",
+      "categoryId": "C03",
+      "name": "Log Aset Server M4",
+      "date": "2026-02-14",
+      "size": "450 KB"
+    },
+    {
+      "id": "DOC-C03-002",
+      "categoryId": "C03",
+      "name": "Daftar Kamera CCTV",
+      "date": "2026-04-10",
+      "size": "1.5 MB"
+    },
+    {
+      "id": "DOC-C03-003",
+      "categoryId": "C03",
+      "name": "Inventaris Laptop 2026",
+      "date": "2026-01-05",
+      "size": "900 KB"
+    },
+    {
+      "id": "DOC-1779259164453",
+      "categoryId": "C11",
+      "name": "SK Testing",
+      "size": "0.34 MB",
+      "date": "2026-05-20",
+      "filePath": "/uploads/1779259164429-7b2415649c31434e98c4c9a9a2b7d3de_Lampiran_I_Juknis_Pembayaran_Gaji_13_2026.docx.pdf"
+    },
+    {
+      "id": "DOC-1779259894892",
+      "categoryId": "C01",
+      "name": "SK Testing2",
+      "size": "0.34 MB",
+      "date": "2026-05-20",
+      "filePath": "/uploads/1779259894890-SK Testing.pdf"
+    }
+  ]
+}

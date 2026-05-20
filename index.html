@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Katalog Data Terpadu</title>
+    <style>
+        /* Desain Sistem Berbasis Variabel CSS */
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #10b981;
+            --success-hover: #059669;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-700: #374151;
+            --text-dark: #111827;
+            --text-light: #6b7280;
+            --bg-body: #f8fafc;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-body); color: var(--text-dark); margin: 0; padding: 20px; line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .hidden { display: none !important; }
+        
+        /* Header & Kontrol */
+        .header-section { border-bottom: 2px solid var(--gray-200); padding-bottom: 16px; margin-bottom: 24px; }
+        h2 { margin: 0 0 16px 0; font-size: 1.5rem; color: var(--text-dark); }
+        .controls { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .control-group { display: flex; gap: 12px; align-items: center; }
+        
+        input[type="text"], select { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+        input[type="text"]:focus, select:focus { border-color: var(--primary); }
+        input[type="text"] { min-width: 280px; }
+
+        button { cursor: pointer; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 500; transition: background-color 0.2s, color 0.2s; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-primary:hover:not(:disabled) { background-color: var(--primary-hover); }
+        .btn-secondary { background-color: var(--gray-700); color: white; }
+        .btn-secondary:hover { background-color: #1f2937; }
+        .btn-action { background-color: var(--success); color: white; padding: 8px 14px; font-size: 0.85rem; }
+        .btn-action:hover { background-color: var(--success-hover); }
+
+        /* Grid Katalog (Card) */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        .card { border: 1px solid var(--gray-200); border-radius: 10px; padding: 20px; text-align: left; background: #ffffff; cursor: pointer; transition: all 0.2s ease-in-out; display: flex; flex-direction: column; justify-content: space-between; height: 100%; box-sizing: border-box; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: #bfdbfe; }
+        .card-title { font-size: 1.1rem; font-weight: 600; color: var(--primary); margin: 0 0 8px 0; }
+        .card-desc { font-size: 0.9rem; color: var(--text-light); margin: 0 0 16px 0; flex-grow: 1; }
+        .card-footer { font-size: 0.8rem; color: #9ca3af; display: flex; justify-content: space-between; border-top: 1px solid var(--gray-100); padding-top: 12px; }
+
+        /* Tabel Data */
+        .table-responsive { overflow-x: auto; border-radius: 8px; border: 1px solid var(--gray-200); }
+        table { width: 100%; min-width: 700px; border-collapse: collapse; text-align: left; }
+        th, td { padding: 14px 16px; border-bottom: 1px solid var(--gray-200); }
+        th { background-color: var(--gray-100); font-weight: 600; cursor: pointer; user-select: none; transition: background-color 0.2s; white-space: nowrap; }
+        th:hover { background-color: #e5e7eb; }
+        tr:hover td { background-color: #f8fafc; }
+        td { font-size: 0.95rem; }
+        .col-action { text-align: right; width: 100px; }
+
+        /* Paginasi */
+        .pagination { display: flex; justify-content: flex-end; align-items: center; margin-top: 24px; gap: 16px; font-size: 0.95rem; }
+        .info-text { color: var(--text-light); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- MOCKUP LOADER (Selama fetch data) -->
+    <div id="loader" style="text-align: center; padding: 40px; color: #6b7280;">Mengambil data.json...</div>
+
+    <!-- VIEW 1: KATALOG (Kumpulan Card) -->
+    <div id="view-catalog" class="hidden">
+        <div class="header-section">
+            <h2>Katalog Kategori Dokumen</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <input type="text" id="search-cat" placeholder="Cari kategori (nama/deskripsi)..." oninput="handleCatalogInput()">
+                </div>
+                <div class="control-group">
+                    <span class="info-text">Urutkan:</span>
+                    <select id="sort-cat" onchange="handleCatalogInput()">
+                        <option value="name_asc">Nama (A-Z)</option>
+                        <option value="name_desc">Nama (Z-A)</option>
+                        <option value="date_desc">Terbaru</option>
+                        <option value="date_asc">Terlama</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-grid" id="card-container"></div>
+
+        <div class="pagination">
+            <span id="cat-info" class="info-text"></span>
+            <button class="btn-primary" id="cat-prev" onclick="changePage('catalog', -1)">← Prev</button>
+            <span id="cat-page-text"></span>
+            <button class="btn-primary" id="cat-next" onclick="changePage('catalog', 1)">Next →</button>
+        </div>
+    </div>
+
+    <!-- VIEW 2: TABEL (Daftar Dokumen) -->
+    <div id="view-table" class="hidden">
+        <div class="header-section">
+            <button class="btn-secondary" style="margin-bottom: 16px;" onclick="switchView('catalog')">← Kembali ke Katalog</button>
+            <h2 id="table-title">Daftar Dokumen</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <input type="text" id="search-doc" placeholder="Cari dokumen (ID/Nama/Tanggal)..." oninput="handleTableInput()">
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="handleTableSort('id')">ID Dokumen ↕</th>
+                        <th onclick="handleTableSort('name')">Nama Dokumen ↕</th>
+                        <th onclick="handleTableSort('size')">Ukuran ↕</th>
+                        <th onclick="handleTableSort('date')">Tanggal ↕</th>
+                        <th class="col-action">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <span id="doc-info" class="info-text"></span>
+            <button class="btn-primary" id="doc-prev" onclick="changePage('table', -1)">← Prev</button>
+            <span id="doc-page-text"></span>
+            <button class="btn-primary" id="doc-next" onclick="changePage('table', 1)">Next →</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // 1. Database & State Management
+    let database = { categories: [], documents: [] };
+
+    const state = {
+        catalog: { query: '', sort: 'name_asc', page: 1, perPage: 8, filtered: [] },
+        table: { activeCategory: null, query: '', sortCol: 'id', sortAsc: true, page: 1, perPage: 5, dataSet: [], filtered: [] }
+    };
+
+    // 2. Fetch Data JSON
+    document.addEventListener('DOMContentLoaded', () => {
+        // Menggunakan Fetch API untuk mengambil file data.json
+        fetch('data.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                database = data;
+                generateDummyDocuments(); // Hasilkan ekstra data untuk simulasi jika kurang
+                document.getElementById('loader').classList.add('hidden');
+                processCatalog();
+                switchView('catalog');
+            })
+            .catch(error => {
+                console.error("Gagal memuat data.json:", error);
+                alert("Peringatan: Gagal memuat data.json (Masalah CORS/File tidak ditemukan). Memuat data cadangan lokal.");
+                
+                // Fallback (jika di-run langsung via file:// tanpa local server)
+                database = generateFallbackData(); 
+                document.getElementById('loader').classList.add('hidden');
+                processCatalog();
+                switchView('catalog');
+            });
+    });
+
+    // --- LOGIKA KATALOG (CARDS) ---
+
+    function handleCatalogInput() {
+        state.catalog.query = document.getElementById('search-cat').value.toLowerCase();
+        state.catalog.sort = document.getElementById('sort-cat').value;
+        state.catalog.page = 1; // Reset ke halaman 1
+        processCatalog();
+    }
+
+    function processCatalog() {
+        // A. Filter (Search)
+        let result = database.categories.filter(c => 
+            c.name.toLowerCase().includes(state.catalog.query) || 
+            c.desc.toLowerCase().includes(state.catalog.query)
+        );
+
+        // B. Sort
+        result.sort((a, b) => {
+            if (state.catalog.sort === 'name_asc') return a.name.localeCompare(b.name);
+            if (state.catalog.sort === 'name_desc') return b.name.localeCompare(a.name);
+            if (state.catalog.sort === 'date_asc') return a.date.localeCompare(b.date);
+            if (state.catalog.sort === 'date_desc') return b.date.localeCompare(a.date);
+            return 0;
+        });
+
+        state.catalog.filtered = result;
+        renderCatalog();
+    }
+
+    function renderCatalog() {
+        const container = document.getElementById('card-container');
+        container.innerHTML = '';
+        
+        const { page, perPage, filtered } = state.catalog;
+        const start = (page - 1) * perPage;
+        const pagedData = filtered.slice(start, start + perPage);
+
+        if (pagedData.length === 0) {
+            container.innerHTML = '<div style="grid-column: 1/-1; text-align:center; color:#6b7280;">Kategori tidak ditemukan.</div>';
+        }
+
+        pagedData.forEach(cat => {
+            // Hitung jumlah dokumen per kategori
+            const docCount = database.documents.filter(d => d.categoryId === cat.id).length;
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => openCategory(cat);
+            card.innerHTML = `
+                <div>
+                    <h3 class="card-title">${cat.name}</h3>
+                    <p class="card-desc">${cat.desc}</p>
+                </div>
+                <div class="card-footer">
+                    <span>📅 ${cat.date}</span>
+                    <span>📂 ${docCount} Dokumen</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        renderPagination('catalog', filtered.length, page, perPage);
+    }
+
+    // --- LOGIKA TABEL (DOCUMENTS) ---
+
+    function openCategory(cat) {
+        document.getElementById('table-title').innerText = `Daftar Dokumen: ${cat.name}`;
+        state.table.activeCategory = cat.id;
+        state.table.dataSet = database.documents.filter(d => d.categoryId === cat.id);
+        
+        // Reset state tabel
+        document.getElementById('search-doc').value = '';
+        state.table.query = '';
+        state.table.sortCol = 'id';
+        state.table.sortAsc = true;
+        state.table.page = 1;
+
+        processTable();
+        switchView('table');
+    }
+
+    function handleTableInput() {
+        state.table.query = document.getElementById('search-doc').value.toLowerCase();
+        state.table.page = 1;
+        processTable();
+    }
+
+    function handleTableSort(column) {
+        if (state.table.sortCol === column) {
+            state.table.sortAsc = !state.table.sortAsc;
+        } else {
+            state.table.sortCol = column;
+            state.table.sortAsc = true;
+        }
+        processTable();
+    }
+
+    function processTable() {
+        // A. Filter (Search)
+        let result = state.table.dataSet.filter(d => 
+            d.id.toLowerCase().includes(state.table.query) || 
+            d.name.toLowerCase().includes(state.table.query) ||
+            d.date.toLowerCase().includes(state.table.query)
+        );
+
+        // B. Sort
+        result.sort((a, b) => {
+            let valA = a[state.table.sortCol];
+            let valB = b[state.table.sortCol];
+            if (valA < valB) return state.table.sortAsc ? -1 : 1;
+            if (valA > valB) return state.table.sortAsc ? 1 : -1;
+            return 0;
+        });
+
+        state.table.filtered = result;
+        renderTable();
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('table-body');
+        tbody.innerHTML = '';
+
+        const { page, perPage, filtered } = state.table;
+        const start = (page - 1) * perPage;
+        const pagedData = filtered.slice(start, start + perPage);
+
+        if (pagedData.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Tidak ada dokumen ditemukan.</td></tr>`;
+        }
+
+        pagedData.forEach(doc => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${doc.id}</strong></td>
+                <td>${doc.name}</td>
+                <td>${doc.size}</td>
+                <td>${doc.date}</td>
+                <td class="col-action">
+                    <button class="btn-action" onclick="downloadItem('${doc.id}')">Unduh</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        renderPagination('table', filtered.length, page, perPage);
+    }
+
+    // --- UTILITAS BERSAMA ---
+
+    function switchView(view) {
+        document.getElementById('view-catalog').classList.toggle('hidden', view !== 'catalog');
+        document.getElementById('view-table').classList.toggle('hidden', view !== 'table');
+    }
+
+    function changePage(context, dir) {
+        const s = state[context];
+        const maxPage = Math.ceil(s.filtered.length / s.perPage) || 1;
+        const newPage = s.page + dir;
+
+        if (newPage >= 1 && newPage <= maxPage) {
+            s.page = newPage;
+            if (context === 'catalog') processCatalog();
+            else processTable();
+        }
+    }
+
+    function renderPagination(context, totalItems, currentPage, perPage) {
+        const maxPage = Math.ceil(totalItems / perPage) || 1;
+        
+        // Update Teks
+        const prefix = context === 'catalog' ? 'cat' : 'doc';
+        document.getElementById(`${prefix}-info`).innerText = `Total: ${totalItems} data`;
+        document.getElementById(`${prefix}-page-text`).innerText = `Hal ${currentPage} / ${maxPage}`;
+
+        // Update Status Tombol
+        document.getElementById(`${prefix}-prev`).disabled = currentPage === 1;
+        document.getElementById(`${prefix}-next`).disabled = currentPage === maxPage;
+    }
+
+    function downloadItem(id) {
+        // 1. Cari data dokumen berdasarkan ID di database
+        const doc = database.documents.find(d => d.id === id);
+
+        // 2. Validasi apakah dokumen ditemukan dan memiliki atribut filePath
+        if (doc && doc.filePath) {
+            // Buat elemen tautan (anchor) sementara secara dinamis
+            const link = document.createElement('a');
+            
+            // Set URL sumber file (merujuk ke folder /uploads/)
+            link.href = doc.filePath; 
+            
+            // Atribut download untuk memaksa peramban mengunduh file (bukan membukanya)
+            // Menetapkan nama file saat diunduh sesuai nama dokumen
+            link.download = doc.name; 
+            
+            // Buka di tab baru sebagai cadangan jika peramban memaksa pratinjau (seperti PDF)
+            link.target = '_blank'; 
+            
+            // Eksekusi klik otomatis pada elemen, lalu bersihkan dari DOM
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            // Penanganan error jika file fisik belum ada (data dummy)
+            const docName = doc ? doc.name : id;
+            alert(`Peringatan: File fisik untuk dokumen "${docName}" tidak ditemukan. Ini mungkin data dummy atau file belum diunggah.`);
+        }
+    }
+
+    // Generator Data Fallback (Mencegah blank screen jika tidak dijalankan di Local Server)
+    function generateFallbackData() {
+        const fallback = { categories: [], documents: [] };
+        for (let i = 1; i <= 24; i++) {
+            const catId = `CAT-${String(i).padStart(2,'0')}`;
+            fallback.categories.push({ id: catId, name: `Kategori Fiktif ${i}`, desc: `Deskripsi otomatis untuk kategori ${i}.`, date: `2026-05-${String((i%28)+1).padStart(2,'0')}` });
+            for (let j = 1; j <= 15; j++) {
+                fallback.documents.push({ id: `DOC-${i}-${j}`, categoryId: catId, name: `File Simulasi ${i}-${j}.pdf`, size: `${(Math.random() * 5).toFixed(1)} MB`, date: `2026-04-${String((j%28)+1).padStart(2,'0')}` });
+            }
+        }
+        return fallback;
+    }
+
+    // Mengisi dokumen dummy tambahan ke JSON murni agar paginasi tabel terlihat berfungsi
+    function generateDummyDocuments() {
+        database.categories.forEach(cat => {
+            const docExist = database.documents.filter(d => d.categoryId === cat.id).length;
+            if (docExist < 12) {
+                for(let i=docExist + 1; i<=15; i++) {
+                    database.documents.push({
+                        id: `DOC-${cat.id}-${String(i).padStart(3,'0')}`,
+                        categoryId: cat.id, name: `Arsip Tambahan ${cat.name} #${i}`,
+                        size: `${(Math.random() * 3 + 0.5).toFixed(1)} MB`,
+                        date: `2026-04-${String((i%28)+1).padStart(2,'0')}`
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
