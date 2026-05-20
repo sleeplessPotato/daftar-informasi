@@ -17,9 +17,8 @@
             --text-ghost: #94a3b8;
             --border: #e2e8f0;
             --border-hover: #cbd5e1;
-            --success: #10b981;
-            --success-light: #ecfdf5;
-            --success-text: #047857;
+            --info-light: #f0f5ff;
+            --info-text: #1d4ed8;
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
@@ -33,7 +32,7 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             background-color: var(--bg-app); 
             color: var(--text-main); 
-            padding: 16px; /* Padding lebih kecil di mobile */
+            padding: 16px;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -41,13 +40,12 @@
             max-width: 1240px; 
             margin: 0 auto; 
             background: var(--surface); 
-            padding: 20px; /* Responsif padding */
+            padding: 20px; 
             border-radius: var(--radius-lg); 
             border: 1px solid var(--border);
             box-shadow: var(--shadow-md);
         }
 
-        /* Responsive Container untuk Layar Besar */
         @media (min-width: 640px) { body { padding: 32px 24px; } .container { padding: 40px; } }
 
         .hidden { display: none !important; }
@@ -67,14 +65,13 @@
 
         .controls-wrapper {
             display: flex;
-            flex-direction: column; /* Fleksibel menumpuk di mobile */
+            flex-direction: column;
             gap: 16px;
             background: #f8fafc;
             padding: 16px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border);
         }
-        /* Berjajar horizontal saat layar cukup lebar */
         @media (min-width: 768px) { 
             .controls-wrapper { flex-direction: row; justify-content: space-between; align-items: center; padding: 16px 24px; } 
         }
@@ -82,7 +79,6 @@
         .search-container { position: relative; width: 100%; }
         @media (min-width: 768px) { .search-container { max-width: 400px; } }
         
-        /* Input & Select Custom */
         input[type="text"], select { 
             width: 100%;
             padding: 10px 16px; 
@@ -129,40 +125,34 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            width: 100%; /* Lebar penuh di mobile */
+            width: 100%;
             justify-content: center;
         }
         @media (min-width: 480px) { .btn-back { width: auto; justify-content: start; margin-bottom: 24px; } }
-        
-        .btn-back:hover { 
-            background-color: #f1f5f9; 
-            color: var(--text-main);
-            border-color: var(--border-hover);
-        }
+        .btn-back:hover { background-color: #f1f5f9; color: var(--text-main); border-color: var(--border-hover); }
         
         .btn-nav { background-color: var(--surface); color: var(--text-muted); border: 1px solid var(--border); box-shadow: var(--shadow-sm); width: 100%; text-align: center; }
         @media (min-width: 480px) { .btn-nav { width: auto; } }
         .btn-nav:hover:not(:disabled) { background-color: #f1f5f9; color: var(--text-main); border-color: var(--border-hover); }
 
-        .btn-download { 
-            background-color: var(--success-light); 
-            color: var(--success-text); 
+        .btn-preview { 
+            background-color: var(--info-light); 
+            color: var(--info-text); 
             padding: 8px 16px; 
             font-size: 0.85rem; 
             font-weight: 600;
             width: 100%;
         }
-        @media (min-width: 640px) { .btn-download { width: auto; } }
-        .btn-download:hover { background-color: var(--success); color: white; }
+        @media (min-width: 640px) { .btn-preview { width: auto; } }
+        .btn-preview:hover { background-color: var(--primary); color: white; }
 
         /* GRID KATALOG (CARDS DESIGN) */
         .card-grid { 
             display: grid; 
-            grid-template-columns: 1fr; /* 1 Kolom di mobile */
+            grid-template-columns: 1fr; 
             gap: 16px; 
             margin-bottom: 24px;
         }
-        /* Grid Breakpoints */
         @media (min-width: 540px) { .card-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
         @media (min-width: 900px) { .card-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
         @media (min-width: 1150px) { .card-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -180,12 +170,8 @@
             position: relative;
         }
         @media (min-width: 640px) { .card { padding: 24px; } }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: #93c5fd; }
         
-        .card:hover { 
-            transform: translateY(-4px); 
-            box-shadow: var(--shadow-lg); 
-            border-color: #93c5fd;
-        }
         .card-title { 
             font-size: 1.1rem; 
             font-weight: 600; 
@@ -197,13 +183,8 @@
         @media (min-width: 640px) { .card-title { font-size: 1.125rem; } }
         .card:hover .card-title { color: var(--primary); }
         
-        .card-desc { 
-            font-size: 0.9rem; 
-            color: var(--text-muted); 
-            margin-bottom: 20px; 
-            flex-grow: 1; 
-            line-height: 1.5;
-        }
+        .card-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; line-height: 1.5; }
+        
         .card-footer { 
             font-size: 0.8rem; 
             font-weight: 500;
@@ -215,17 +196,33 @@
         }
         .footer-item { display: flex; align-items: center; gap: 6px; }
 
-        /* DATA TABLE DESIGN */
+        /* =======================================================
+           FIX SINKRONISASI LEBAR: METODE HYBRID (PX & AUTO)
+           ======================================================= */
+        #view-table { 
+            max-width: 850px; 
+            margin: 0 auto;   
+        }
+
         .table-responsive { 
-            overflow-x: auto; /* Scrollbar horizontal otomatis jika tabel kepotong di mobile */
             border-radius: var(--radius-md); 
             border: 1px solid var(--border); 
             box-shadow: var(--shadow-sm);
             background: var(--surface);
         }
-        table { width: 100%; min-width: 750px; border-collapse: collapse; text-align: left; }
-        th, td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
-        @media (min-width: 640px) { th, td { padding: 16px 20px; } }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            text-align: left;
+            table-layout: fixed; /* Mengunci arsitektur grid secara rigid */
+        }
+        
+        th, td { 
+            padding: 16px 20px; 
+            border-bottom: 1px solid var(--border); 
+            vertical-align: middle;
+        }
         
         th { 
             background-color: #f8fafc; 
@@ -241,12 +238,68 @@
         th:hover { background-color: #f1f5f9; color: var(--text-main); }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background-color: #f8fafc; }
-        td { font-size: 0.95rem; color: var(--text-main); line-height: 1.5; }
         
+        /* Solusi Overlapping: Mengunci lebar fisik kolom kontrol (px), 
+           dan memberikan kebebasan fluid pada kolom inti nama (auto).
+        */
+        .col-id { width: 130px; font-family: monospace; color: var(--text-muted); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .col-name { width: auto; font-weight: 500; white-space: normal; word-break: break-word; }
+        .col-size { width: 100px; white-space: nowrap; }
+        .col-action { width: 120px; text-align: right; white-space: nowrap; }
+        
+        td { font-size: 0.95rem; color: var(--text-main); line-height: 1.4; }
+
+        /* Wadah Khusus Mobile List Cards */
+        #mobile-list-container {
+            display: none;
+            width: 100%;
+        }
+
+        /* =======================================================
+           RESPONSIVE MOBILE VIEW (SMARTPHONE)
+           ======================================================= */
+        @media (max-width: 640px) {
+            .table-responsive {
+                display: none !important; 
+            }
+            #mobile-list-container {
+                display: block !important; 
+            }
+            .mobile-doc-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: 16px;
+                margin-bottom: 12px;
+                box-shadow: var(--shadow-sm);
+            }
+            .mobile-doc-id {
+                font-family: monospace;
+                color: var(--text-ghost);
+                font-size: 0.8rem;
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+            .mobile-doc-name {
+                font-weight: 600;
+                font-size: 1rem;
+                color: var(--text-main);
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+            .mobile-doc-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid #f1f5f9;
+                padding-top: 12px;
+            }
+        }
+
         /* PAGINATION PANEL */
         .pagination-panel { 
             display: flex; 
-            flex-direction: column; /* Vertikal menumpuk di mobile */
+            flex-direction: column; 
             align-items: center; 
             margin-top: 24px; 
             gap: 16px;
@@ -254,9 +307,7 @@
             border-top: 1px solid var(--border);
             width: 100%;
         }
-        @media (min-width: 480px) {
-            .pagination-panel { flex-direction: row; justify-content: flex-end; gap: 16px; }
-        }
+        @media (min-width: 480px) { .pagination-panel { flex-direction: row; justify-content: flex-end; gap: 16px; } }
         @media (min-width: 640px) { .pagination-panel { margin-top: 32px; gap: 20px; } }
         
         .info-count { color: var(--text-muted); font-size: 0.875rem; font-weight: 500; text-align: center; }
@@ -264,7 +315,6 @@
         
         .page-indicator { font-size: 0.875rem; font-weight: 600; color: var(--text-main); background: #f1f5f9; padding: 6px 12px; border-radius: 6px; white-space: nowrap; }
 
-        /* ICONS SVG */
         .icon { width: 16px; height: 16px; fill: currentColor; display: inline-block; vertical-align: middle; }
     </style>
 </head>
@@ -320,16 +370,17 @@
             <table>
                 <thead>
                     <tr>
-                        <th onclick="handleTableSort('id')">ID Dokumen ↕</th>
-                        <th onclick="handleTableSort('name')">Nama Dokumen ↕</th>
-                        <th onclick="handleTableSort('size')">Ukuran Berkas ↕</th>
-                        <th onclick="handleTableSort('date')">Tanggal Rilis ↕</th>
-                        <th style="text-align: right; cursor: default; background: #f8fafc; pointer-events: none;">Aksi</th>
+                        <th onclick="handleTableSort('id')" class="col-id">ID Dokumen ↕</th>
+                        <th onclick="handleTableSort('name')" class="col-name">Nama Dokumen ↕</th>
+                        <th onclick="handleTableSort('size')" class="col-size">Ukuran Berkas ↕</th>
+                        <th style="cursor: default; background: #f8fafc; pointer-events: none;" class="col-action">Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="table-body"></tbody>
             </table>
         </div>
+
+        <div id="mobile-list-container"></div>
 
         <div class="pagination-panel">
             <span id="doc-info" class="info-count"></span>
@@ -461,8 +512,7 @@
     function processTable() {
         let result = state.table.dataSet.filter(d => 
             d.id.toLowerCase().includes(state.table.query) || 
-            d.name.toLowerCase().includes(state.table.query) ||
-            d.date.toLowerCase().includes(state.table.query)
+            d.name.toLowerCase().includes(state.table.query)
         );
 
         result.sort((a, b) => {
@@ -479,28 +529,45 @@
 
     function renderTable() {
         const tbody = document.getElementById('table-body');
+        const mobileContainer = document.getElementById('mobile-list-container');
+        
         tbody.innerHTML = '';
+        mobileContainer.innerHTML = '';
 
         const { page, perPage, filtered } = state.table;
         const start = (page - 1) * perPage;
         const pagedData = filtered.slice(start, start + perPage);
 
         if (pagedData.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 32px; color: var(--text-ghost);">Tidak ada dokumen dalam kategori ini.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 32px; color: var(--text-ghost);">Tidak ada dokumen dalam kategori ini.</td></tr>`;
+            mobileContainer.innerHTML = `<div style="text-align:center; padding: 32px; color: var(--text-ghost);">Tidak ada dokumen dalam kategori ini.</div>`;
+            renderPaginationPanel('doc', 0, page, perPage);
+            return;
         }
 
         pagedData.forEach(doc => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td style="font-family: monospace; color: var(--text-muted); font-weight: 600;">${doc.id}</td>
-                <td style="font-weight: 500;">${doc.name}</td>
-                <td><span style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">${doc.size}</span></td>
-                <td style="color: var(--text-muted);">${doc.date}</td>
-                <td style="text-align: right;">
-                    <button class="btn-download" onclick="downloadItem('${doc.id}')">Unduh</button>
+                <td class="col-id">${doc.id}</td>
+                <td class="col-name" title="${doc.name}">${doc.name}</td>
+                <td class="col-size"><span style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">${doc.size}</span></td>
+                <td class="col-action">
+                    <button class="btn-preview" onclick="previewItem('${doc.id}')">Tampilkan</button>
                 </td>
             `;
             tbody.appendChild(tr);
+
+            const mobileCard = document.createElement('div');
+            mobileCard.className = 'mobile-doc-card';
+            mobileCard.innerHTML = `
+                <div class="mobile-doc-id">${doc.id}</div>
+                <div class="mobile-doc-name">${doc.name}</div>
+                <div class="mobile-doc-meta">
+                    <span style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 500; color: var(--text-muted);">${doc.size}</span>
+                    <button class="btn-preview" onclick="previewItem('${doc.id}')">Tampilkan</button>
+                </div>
+            `;
+            mobileContainer.appendChild(mobileCard);
         });
 
         renderPaginationPanel('doc', filtered.length, page, perPage);
@@ -532,16 +599,10 @@
         document.getElementById(`${prefix}-next`).disabled = currentPage === maxPage;
     }
 
-    function downloadItem(id) {
+    function previewItem(id) {
         const doc = database.documents.find(d => d.id === id);
         if (doc && doc.filePath) {
-            const link = document.createElement('a');
-            link.href = doc.filePath; 
-            link.download = doc.name; 
-            link.target = '_blank'; 
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            window.open(doc.filePath, '_blank');
         } else {
             alert(`Berkas fisik untuk ID: ${id} tidak ditemukan di repositori lokal.`);
         }
@@ -554,7 +615,7 @@
             const id = `C${String(i+1).padStart(2,'0')}`;
             fallback.categories.push({ id, name, desc: `Dokumen rekam log arsip untuk divisi ${name} internal.`, date: `2026-05-${10+i}` });
             for(let j=1; j<=4; j++) {
-                fallback.documents.push({ id: `DOC-${id}-${j}`, categoryId: id, name: `Berkas Utama ${name} Bagian ${j}`, size: `${(Math.random()*2+1).toFixed(1)} MB`, date: `2026-05-12`, filePath: `uploads/sample.pdf` });
+                fallback.documents.push({ id: `DOC-${id}-${j}`, categoryId: id, name: `Berkas Utama ${name} Bagian ${j}`, size: `${(Math.random()*2+1).toFixed(1)} MB`, filePath: `uploads/sample.pdf` });
             }
         });
         return fallback;

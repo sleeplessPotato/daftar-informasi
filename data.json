@@ -1,93 +1,113 @@
 {
   "categories": [
     {
-      "id": "C02",
+      "id": "CAT-1779266521215",
+      "name": "Profil Unit Kerja",
+      "desc": "Memuat informasi dasar legalitas dan operasional instansi, meliputi kedudukan/alamat, alokasi anggaran, tugas pokok dan fungsi (tupoksi), struktur organisasi, profil pejabat pimpinan, serta Laporan Harta Kekayaan Penyelenggara Negara (LHKPN).",
+      "date": "2026-05-20"
+    },
+    {
+      "id": "CAT-1779266536192",
+      "name": "Program dan Kegiatan",
+      "desc": "Berisi rencana kerja, agenda, serta garis besar aktivitas yang dijalankan oleh unit kerja dalam periode tahun berjalan.",
+      "date": "2026-05-20"
+    },
+    {
+      "id": "CAT-1779266558891",
+      "name": "Ringkasan Kinerja",
+      "desc": "Memuat dokumen evaluasi capaian target organisasi yang disajikan secara berkala",
+      "date": "2026-05-20"
+    },
+    {
+      "id": "CAT-1779266578540",
       "name": "Laporan Keuangan",
-      "desc": "Arsip laporan keuangan dan anggaran tahunan.",
-      "date": "2026-04-15"
+      "desc": "Menyajikan pertanggungjawaban keuangan instansi yang telah diperiksa oleh auditor (audited)",
+      "date": "2026-05-20"
     },
     {
-      "id": "C03",
-      "name": "Aset & Inventaris",
-      "desc": "Daftar inventaris IT dan aset kantor lainnya.",
-      "date": "2026-01-20"
+      "id": "CAT-1779266597183",
+      "name": "Laporan Akses Informasi Publik",
+      "desc": "Berisi data tata kelola pelayanan informasi publik, meliputi ringkasan laporan layanan, register permohonan informasi, register pengajuan keberatan, serta hasil Survei Kepuasan Masyarakat (SKM)",
+      "date": "2026-05-20"
     },
     {
-      "id": "C04",
-      "name": "SOP Operasional",
-      "desc": "Standar Operasional Prosedur untuk pelayanan.",
-      "date": "2025-12-05"
+      "id": "CAT-1779266611438",
+      "name": "Regulasi Obat dan Makanan",
+      "desc": "Memuat daftar peraturan hukum, kebijakan, atau keputusan yang telah ditetapkan serta rancangan regulasi baru yang berada di bawah kewenangan pengawasan obat dan makanan.",
+      "date": "2026-05-20"
     },
     {
-      "id": "C05",
-      "name": "Dokumen Pengadaan",
-      "desc": "Arsip tender, vendor, dan pengadaan barang/jasa.",
-      "date": "2026-03-30"
+      "id": "CAT-1779266629624",
+      "name": "Prosedur Memperoleh Informasi Publik",
+      "desc": "Berisi panduan baku (SOP) bagi masyarakat untuk mengakses informasi publik, mencakup tata cara permintaan informasi, tata cara pengajuan keberatan, hingga proses penyelesaian sengketa informasi.",
+      "date": "2026-05-20"
     },
     {
-      "id": "C06",
-      "name": "Audit Internal",
-      "desc": "Hasil audit berkala, temuan, dan tindak lanjut.",
-      "date": "2026-02-28"
+      "id": "CAT-1779266644289",
+      "name": "Tata Cara Pengaduan Penyalahgunaan Wewenang",
+      "desc": "Menyediakan saluran pengaduan resmi terkait pelanggaran disiplin atau wewenang, melalui Unit Layanan Pengaduan Konsumen (ULPK) BPOM maupun sistem penyingkapan pelanggaran anonim (Whistleblowing System / WBS).",
+      "date": "2026-05-20"
     },
     {
-      "id": "C07",
-      "name": "Materi Pelatihan",
-      "desc": "Modul dan presentasi untuk peningkatan SDM.",
-      "date": "2025-11-12"
+      "id": "CAT-1779266666120",
+      "name": "Pengadaan Barang dan Jasa",
+      "desc": "Memuat transparansi rencana belanja modal publik yang tertuang dalam Rencana Umum Pengadaan (RUP) instansi.",
+      "date": "2026-05-20"
     },
     {
-      "id": "C08",
-      "name": "Surat Edaran",
-      "desc": "Kumpulan surat edaran resmi dari instansi pusat.",
-      "date": "2026-05-01"
+      "id": "CAT-1779266681328",
+      "name": "Informasi Ketenagakerjaan",
+      "desc": "Menyajikan data profil, jumlah, kualifikasi, dan sebaran data Sumber Daya Manusia (SDM) / aparatur yang bertugas.",
+      "date": "2026-05-20"
     },
     {
-      "id": "C09",
-      "name": "Notulensi Rapat",
-      "desc": "Catatan resmi hasil rapat pleno dan divisi.",
-      "date": "2026-05-18"
+      "id": "CAT-1779266703991",
+      "name": "Prosedur Peringatan Dini dan Evakuasi",
+      "desc": "Berisi dokumen mitigasi risiko bencana dan keselamatan kerja, mencakup Pedoman K3 umum, Prosedur Keselamatan Kerja spesifik di Laboratorium, serta panduan visual berupa Video Evakuasi Keadaan Darurat.",
+      "date": "2026-05-20"
     },
     {
-      "id": "C10",
-      "name": "Dokumen Legalitas",
-      "desc": "MoU, perjanjian kerja sama, dan kontrak.",
-      "date": "2025-08-22"
+      "id": "CAT-1779266718767",
+      "name": "DIPA Petikan",
+      "desc": "Menyajikan dokumen formasi resmi alokasi anggaran belanja instansi yang disahkan oleh Kementerian Keuangan.",
+      "date": "2026-05-20"
     },
     {
-      "id": "C12",
-      "name": "Data Statistik",
-      "desc": "Laporan data analitik dan statistik bulanan.",
-      "date": "2026-05-19"
+      "id": "CAT-1779266750570",
+      "name": "RKA-KL",
+      "desc": "Memuat dokumen perencanaan penganggaran terperinci yang menyandingkan rencana kinerja dengan kebutuhan pendanaan Balai POM di Lubuklinggau.",
+      "date": "2026-05-20"
     },
     {
-      "id": "CAT-1779263506833",
+      "id": "CAT-1779266772202",
       "name": "Laporan Tahunan",
-      "desc": "Laporan Tahunan Balai POM di Lubuklinggau",
+      "desc": "Berisi laporan komprehensif mengenai jalannya roda organisasi, capaian program, pengawasan, dan kendala operasional yang dihadapi instansi per tahun.",
+      "date": "2026-05-20"
+    },
+    {
+      "id": "CAT-1779266790973",
+      "name": "Jadwal Kegiatan Perencanaan dan Anggaran",
+      "desc": "Menyajikan linimasa waktu (tentative) pelaksanaan penyusunan rencana program dan anggaran serta data realisasi penyerapan anggaran yang telah terlaksana.",
+      "date": "2026-05-20"
+    },
+    {
+      "id": "CAT-1779266805369",
+      "name": "Kinerja Dalam Angka",
+      "desc": "Menyajikan visualisasi data statistik sektoral dan indikator kinerja utama Balai POM di Lubuklinggau dalam bentuk angka/data kuantitatif untuk mempermudah analisis tren.",
+      "date": "2026-05-20"
+    },
+    {
+      "id": "CAT-1779266829519",
+      "name": "Laporan SKM",
+      "desc": "Memuat dokumen laporan komprehensif hasil evaluasi indeks kepuasan masyarakat terhadap mutu pelayanan publik Balai POM di Lubuklinggau.",
+      "date": "2026-05-20"
+    },
+    {
+      "id": "CAT-1779266857714",
+      "name": "Standar Pelayanan Publik",
+      "desc": "Berisi tolok ukur atau acuan baku yang maklumatnya wajib dipatuhi dalam penyelenggaraan pelayanan publik di lingkungan Balai POM di Lubuklinggau sebagai jaminan kepastian bagi penerima layanan.",
       "date": "2026-05-20"
     }
   ],
-  "documents": [
-    {
-      "id": "DOC-C03-001",
-      "categoryId": "C03",
-      "name": "Log Aset Server M4",
-      "date": "2026-02-14",
-      "size": "450 KB"
-    },
-    {
-      "id": "DOC-C03-002",
-      "categoryId": "C03",
-      "name": "Daftar Kamera CCTV",
-      "date": "2026-04-10",
-      "size": "1.5 MB"
-    },
-    {
-      "id": "DOC-C03-003",
-      "categoryId": "C03",
-      "name": "Inventaris Laptop 2026",
-      "date": "2026-01-05",
-      "size": "900 KB"
-    }
-  ]
+  "documents": []
 }
