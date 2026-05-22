@@ -293,6 +293,7 @@
         container.innerHTML = '';
         Object.entries(grouped).forEach(([catId, catDocs]) => {
             if (catDocs.length === 0) return;
+            catDocs.sort((a, b) => a.name.localeCompare(b.name, 'id'));
             const cat = globalCategories.find(c => c.id === catId);
             const catName = cat ? cat.name : catId;
             const isOpen = autoExpand || openGroups.has(catId);

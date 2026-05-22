@@ -273,6 +273,7 @@
             .map(cat => {
                 let docs = database.documents.filter(d => d.categoryId === cat.id);
                 if (search) docs = docs.filter(d => d.name.toLowerCase().includes(search));
+                docs.sort((a, b) => a.name.localeCompare(b.name, 'id'));
                 return { cat, docs };
             })
             .filter(g => {
@@ -381,7 +382,7 @@
     function openDetail(catId) {
         const cat = database.categories.find(c => c.id === catId);
         detailData.catId = catId;
-        detailData.docs = database.documents.filter(d => d.categoryId === catId);
+        detailData.docs = database.documents.filter(d => d.categoryId === catId).sort((a, b) => a.name.localeCompare(b.name, 'id'));
         detailData.page = 1;
         document.getElementById('detail-title').textContent = cat ? cat.name : catId;
         document.getElementById('detail-search').value = '';
