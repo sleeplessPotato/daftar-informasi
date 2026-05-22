@@ -70,6 +70,64 @@
         .acc-body { display: none; }
         .acc-group.open .acc-body { display: block; }
         .acc-empty { padding: 20px; text-align: center; color: var(--text-light); font-size: 0.9rem; font-style: italic; }
+
+        /* ===== MOBILE RESPONSIVE (max 639px) ===== */
+        @media (max-width: 639px) {
+            /* 1. Kurangi padding body & container */
+            body { padding: 10px; }
+            .container { padding: 14px; border-radius: 8px; }
+
+            /* 2. Sync banner: stack secara vertikal */
+            .sync-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .sync-banner button {
+                width: 100%;
+            }
+
+            /* 3. Tabs: bisa wrap agar tidak overflow */
+            .tabs {
+                flex-wrap: wrap;
+            }
+            .tab-btn {
+                flex: 1 1 auto;
+                text-align: center;
+            }
+
+            /* 4. Tabel dokumen di dalam accordion: ubah ke stacked block */
+            .acc-body table { display: block; }
+            .acc-body thead  { display: none; }
+            .acc-body tbody  { display: block; }
+            .acc-body tbody tr {
+                display: block;
+                padding: 14px 16px;
+                border-bottom: 1px solid var(--gray-200);
+            }
+            .acc-body tbody tr:last-child { border-bottom: none; }
+            .acc-body tbody tr:hover td  { background: transparent !important; }
+            .acc-body td {
+                display: block;
+                padding: 2px 0;
+                border: none;
+                width: 100% !important;
+                white-space: normal;
+            }
+            /* Gaya per kolom dokumen (accordion admin) */
+            .acc-body .col-doc-name { font-weight: 600; padding-bottom: 6px !important; }
+            .acc-body .col-doc-info { font-size: 0.82rem; padding-bottom: 8px !important; }
+            .acc-body .col-doc-act  {
+                display: flex;
+                gap: 8px;
+                padding-top: 4px !important;
+            }
+            .acc-body .col-doc-act button { flex: 1; }
+
+            /* 5. Tabel kategori: horizontal scroll + min-width */
+            #section-cat .table-wrap { overflow-x: auto; }
+            #section-cat table { min-width: 540px; table-layout: auto; }
+        }
     </style>
 </head>
 <body>

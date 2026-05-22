@@ -172,6 +172,86 @@
         .col-doc-act  { width: 18%; text-align: right; white-space: nowrap; }
 
         .result-info { color: var(--text-muted); font-size: 0.875rem; margin-top: 16px; text-align: center; }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 639px) {
+            body { padding: 10px; }
+            .container { padding: 14px; border-radius: 10px; }
+            .header-section { margin-bottom: 16px; }
+            .header-section h2 { font-size: 1.2rem; margin-bottom: 12px; }
+            .controls-wrapper { padding: 12px; gap: 10px; }
+            .acc-header { padding: 11px 14px; }
+            .acc-title { font-size: 0.88rem; }
+            .btn-back { margin-bottom: 14px; font-size: 0.85rem; }
+
+            /* Tabel accordion → stacked block */
+            .acc-body table  { display: block; }
+            .acc-body thead  { display: none; }
+            .acc-body tbody  { display: block; }
+            .acc-body tbody tr {
+                display: block;
+                padding: 14px 16px;
+                border-bottom: 1px solid var(--border);
+            }
+            .acc-body tbody tr:last-child { border-bottom: none; }
+            .acc-body tbody tr:hover td  { background: transparent !important; }
+            .acc-body td {
+                display: block;
+                padding: 2px 0;
+                border: none;
+                width: 100% !important;
+                white-space: normal;
+            }
+            /* Gaya per kolom dokumen (accordion index) */
+            .acc-body .col-doc-name { font-weight: 600; padding-bottom: 6px !important; }
+            .acc-body .col-doc-size { font-size: 0.82rem; }
+            .acc-body .col-doc-date { font-size: 0.82rem; padding-bottom: 8px !important; }
+            .acc-body .col-doc-act  { padding-top: 4px !important; }
+            .acc-body .col-doc-act .btn-preview { width: 100%; }
+
+            /* 3. Tabel di detail view: ubah ke stacked block */
+            #detail-view .table-responsive table  { display: block; }
+            #detail-view .table-responsive thead  { display: none; }
+            #detail-view .table-responsive tbody  { display: block; }
+            #detail-view .table-responsive tbody tr {
+                display: block;
+                padding: 14px 16px;
+                border-bottom: 1px solid var(--border);
+            }
+            #detail-view .table-responsive tbody tr:last-child { border-bottom: none; }
+            #detail-view .table-responsive tbody tr:hover td { background: transparent !important; }
+            #detail-view .table-responsive td {
+                display: block;
+                padding: 2px 0;
+                border: none;
+                width: 100% !important;
+                white-space: normal;
+            }
+            #detail-view .table-responsive .col-doc-name { font-weight: 600; padding-bottom: 6px !important; }
+            #detail-view .table-responsive .col-doc-size { font-size: 0.82rem; }
+            #detail-view .table-responsive .col-doc-date { font-size: 0.82rem; padding-bottom: 8px !important; }
+            #detail-view .table-responsive .col-doc-act  { padding-top: 4px !important; }
+            #detail-view .table-responsive .col-doc-act .btn-preview { width: 100%; }
+
+            /* 4. Pagination: stack vertikal, tombol full-width */
+            #pagination-panel {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 8px !important;
+            }
+            #pagination-panel #page-info { margin-right: 0; text-align: center; }
+            #pagination-panel #page-text { text-align: center; }
+            #pagination-panel .btn-nav { width: 100%; text-align: center; }
+
+            #detail-pagination {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 8px !important;
+            }
+            #detail-pagination #detail-info { margin-right: 0; text-align: center; }
+            #detail-pagination #detail-page-text { text-align: center; }
+            #detail-pagination .btn-nav { width: 100%; text-align: center; }
+        }
     </style>
 </head>
 <body>
