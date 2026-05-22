@@ -367,6 +367,37 @@
       "name": "Laporan Survei Kepuasan Masyarakat",
       "date": "2026-05-22",
       "fileUrl": "https://lubuklinggau.pom.go.id/layanan#pills-skkm"
+    },
+    {
+      "id": "DOC-1779438101590",
+      "categoryId": "CAT-1779266857714",
+      "name": "Standar Pelayanan Publik",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/layanan#pills-standar"
+    },
+    {
+      "id": "DOC-1779438377967",
+      "categoryId": "CAT-1779266718767",
+      "name": "DIPA 2024",
+      "date": "2026-05-22",
+      "size": "0.09 MB",
+      "filePath": "uploads/1779438377966-DIPA_2024_LOKA_POM_Di_Kota_Lubuklinggau.pdf"
+    },
+    {
+      "id": "DOC-1779438406499",
+      "categoryId": "CAT-1779266718767",
+      "name": "DIPA 2025",
+      "date": "2026-05-22",
+      "size": "0.10 MB",
+      "filePath": "uploads/1779438406498-2025-01-063.01-672851-11-070-2-00.pdf"
+    },
+    {
+      "id": "DOC-1779438418445",
+      "categoryId": "CAT-1779266718767",
+      "name": "DIPA 2026",
+      "date": "2026-05-22",
+      "size": "0.09 MB",
+      "filePath": "uploads/1779438418444-DIPA_2026_LOKA_POM_Di_Kota_Lubuklinggau.pdf"
     }
   ]
 }
