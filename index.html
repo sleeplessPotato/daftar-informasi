@@ -173,84 +173,65 @@
 
         .result-info { color: var(--text-muted); font-size: 0.875rem; margin-top: 16px; text-align: center; }
 
-        /* ===== MOBILE RESPONSIVE ===== */
+        /* ===== MOBILE RESPONSIVE (dikendalikan via JS ResizeObserver) ===== */
+        /* Gunakan body.is-mobile agar bekerja di dalam iframe WYSIWYG */
+        body.is-mobile { padding: 10px; }
+        body.is-mobile .container { padding: 14px; border-radius: 10px; }
+        body.is-mobile .header-section { margin-bottom: 16px; }
+        body.is-mobile .header-section h2 { font-size: 1.2rem; margin-bottom: 12px; }
+        body.is-mobile .controls-wrapper { padding: 12px; gap: 10px; flex-direction: column; }
+        body.is-mobile .search-container { max-width: 100%; }
+        body.is-mobile .sort-container { width: 100%; }
+        body.is-mobile .acc-header { padding: 11px 14px; }
+        body.is-mobile .acc-title { font-size: 0.88rem; }
+        body.is-mobile .btn-back { margin-bottom: 14px; font-size: 0.85rem; width: 100%; justify-content: center; }
+        body.is-mobile .btn-preview { width: 100%; }
+        body.is-mobile .btn-nav { width: 100%; text-align: center; }
+
+        /* Tabel accordion → stacked block */
+        body.is-mobile .acc-body table,
+        body.is-mobile #detail-view .table-responsive table { display: block; }
+        body.is-mobile .acc-body thead,
+        body.is-mobile #detail-view .table-responsive thead { display: none; }
+        body.is-mobile .acc-body tbody,
+        body.is-mobile #detail-view .table-responsive tbody { display: block; }
+        body.is-mobile .acc-body tbody tr,
+        body.is-mobile #detail-view .table-responsive tbody tr {
+            display: block;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        body.is-mobile .acc-body tbody tr:last-child,
+        body.is-mobile #detail-view .table-responsive tbody tr:last-child { border-bottom: none; }
+        body.is-mobile .acc-body tbody tr:hover td,
+        body.is-mobile #detail-view .table-responsive tbody tr:hover td { background: transparent !important; }
+        body.is-mobile .acc-body td,
+        body.is-mobile #detail-view .table-responsive td {
+            display: block;
+            padding: 2px 0;
+            border: none;
+            width: 100% !important;
+            white-space: normal;
+        }
+        body.is-mobile .col-doc-name { font-weight: 600; padding-bottom: 6px !important; }
+        body.is-mobile .col-doc-size { font-size: 0.82rem; padding-bottom: 2px !important; }
+        body.is-mobile .col-doc-date { font-size: 0.82rem; padding-bottom: 10px !important; }
+        body.is-mobile .col-doc-act  { padding-top: 2px !important; }
+
+        /* Pagination stack vertikal */
+        body.is-mobile #pagination-panel,
+        body.is-mobile #detail-pagination {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 8px !important;
+        }
+        body.is-mobile #pagination-panel #page-info,
+        body.is-mobile #detail-pagination #detail-info { margin-right: 0; text-align: center; }
+
+        /* Tetap pertahankan media query sebagai fallback untuk akses langsung */
         @media (max-width: 639px) {
-            body { padding: 10px; }
-            .container { padding: 14px; border-radius: 10px; }
-            .header-section { margin-bottom: 16px; }
-            .header-section h2 { font-size: 1.2rem; margin-bottom: 12px; }
-            .controls-wrapper { padding: 12px; gap: 10px; }
-            .acc-header { padding: 11px 14px; }
-            .acc-title { font-size: 0.88rem; }
-            .btn-back { margin-bottom: 14px; font-size: 0.85rem; }
-
-            /* Tabel accordion → stacked block */
-            .acc-body table  { display: block; }
-            .acc-body thead  { display: none; }
-            .acc-body tbody  { display: block; }
-            .acc-body tbody tr {
-                display: block;
-                padding: 14px 16px;
-                border-bottom: 1px solid var(--border);
-            }
-            .acc-body tbody tr:last-child { border-bottom: none; }
-            .acc-body tbody tr:hover td  { background: transparent !important; }
-            .acc-body td {
-                display: block;
-                padding: 2px 0;
-                border: none;
-                width: 100% !important;
-                white-space: normal;
-            }
-            /* Gaya per kolom dokumen (accordion index) */
-            .acc-body .col-doc-name { font-weight: 600; padding-bottom: 6px !important; }
-            .acc-body .col-doc-size { font-size: 0.82rem; }
-            .acc-body .col-doc-date { font-size: 0.82rem; padding-bottom: 8px !important; }
-            .acc-body .col-doc-act  { padding-top: 4px !important; }
-            .acc-body .col-doc-act .btn-preview { width: 100%; }
-
-            /* 3. Tabel di detail view: ubah ke stacked block */
-            #detail-view .table-responsive table  { display: block; }
-            #detail-view .table-responsive thead  { display: none; }
-            #detail-view .table-responsive tbody  { display: block; }
-            #detail-view .table-responsive tbody tr {
-                display: block;
-                padding: 14px 16px;
-                border-bottom: 1px solid var(--border);
-            }
-            #detail-view .table-responsive tbody tr:last-child { border-bottom: none; }
-            #detail-view .table-responsive tbody tr:hover td { background: transparent !important; }
-            #detail-view .table-responsive td {
-                display: block;
-                padding: 2px 0;
-                border: none;
-                width: 100% !important;
-                white-space: normal;
-            }
-            #detail-view .table-responsive .col-doc-name { font-weight: 600; padding-bottom: 6px !important; }
-            #detail-view .table-responsive .col-doc-size { font-size: 0.82rem; }
-            #detail-view .table-responsive .col-doc-date { font-size: 0.82rem; padding-bottom: 8px !important; }
-            #detail-view .table-responsive .col-doc-act  { padding-top: 4px !important; }
-            #detail-view .table-responsive .col-doc-act .btn-preview { width: 100%; }
-
-            /* 4. Pagination: stack vertikal, tombol full-width */
-            #pagination-panel {
-                flex-direction: column !important;
-                align-items: stretch !important;
-                gap: 8px !important;
-            }
-            #pagination-panel #page-info { margin-right: 0; text-align: center; }
-            #pagination-panel #page-text { text-align: center; }
-            #pagination-panel .btn-nav { width: 100%; text-align: center; }
-
-            #detail-pagination {
-                flex-direction: column !important;
-                align-items: stretch !important;
-                gap: 8px !important;
-            }
-            #detail-pagination #detail-info { margin-right: 0; text-align: center; }
-            #detail-pagination #detail-page-text { text-align: center; }
-            #detail-pagination .btn-nav { width: 100%; text-align: center; }
+            body:not(.is-mobile) { padding: 10px; }
+            body:not(.is-mobile) .container { padding: 14px; }
         }
     </style>
 </head>
@@ -329,6 +310,21 @@
             .then(data => { database = data; init(); })
             .catch(() => { database = generateFallbackData(); init(); });
     });
+
+    // Deteksi lebar kontainer aktual (bekerja di dalam iframe)
+    function checkMobile() {
+        const w = document.documentElement.clientWidth;
+        document.body.classList.toggle('is-mobile', w < 640);
+        // Kirim tinggi ke parent CMS agar iframe auto-resize
+        if (window.parent !== window) {
+            window.parent.postMessage({ iframeHeight: document.body.scrollHeight }, '*');
+        }
+    }
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    if (window.ResizeObserver) {
+        new ResizeObserver(checkMobile).observe(document.documentElement);
+    }
 
     function init() {
         const sel = document.getElementById('filter-cat');
