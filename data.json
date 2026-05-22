@@ -268,6 +268,105 @@
       "name": "Employee Of The Month",
       "date": "2026-05-22",
       "fileUrl": "https://lubuklinggau.pom.go.id/profil/eotm"
+    },
+    {
+      "id": "DOC-1779436784999",
+      "categoryId": "CAT-1779266597183",
+      "name": "Ringkasan Laporan Layanan Informasi Publik",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/ppid/laporan-ppid-pelaksana"
+    },
+    {
+      "id": "DOC-1779437006951",
+      "categoryId": "CAT-1779266597183",
+      "name": "Register Permintaan Informasi Publik",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/ppid/laporan-ppid-pelaksana#pills-regpermintaan"
+    },
+    {
+      "id": "DOC-1779437092241",
+      "categoryId": "CAT-1779266597183",
+      "name": "Ringkasan Laporan Layanan Keberatan",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/ppid/laporan-ppid-pelaksana"
+    },
+    {
+      "id": "DOC-1779437183767",
+      "categoryId": "CAT-1779266597183",
+      "name": "Laporan Survei Kepuasan Masyakarat",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/layanan#pills-skkm"
+    },
+    {
+      "id": "DOC-1779437240815",
+      "categoryId": "CAT-1779266611438",
+      "name": "Regulasi yang ditetapkan",
+      "date": "2026-05-22",
+      "fileUrl": "https://jdih.pom.go.id/rule"
+    },
+    {
+      "id": "DOC-1779437261093",
+      "categoryId": "CAT-1779266611438",
+      "name": "Rancangan Regulasi",
+      "date": "2026-05-22",
+      "fileUrl": "https://jdih.pom.go.id/draft"
+    },
+    {
+      "id": "DOC-1779437310668",
+      "categoryId": "CAT-1779266629624",
+      "name": "Tata Cara Permintaan Layanan Publik",
+      "date": "2026-05-22",
+      "fileUrl": "https://ppid.pom.go.id/page/content?i=5004&title=permohonan-informasi"
+    },
+    {
+      "id": "DOC-1779437333457",
+      "categoryId": "CAT-1779266629624",
+      "name": "Tata Cara Pengajuan Keberatan",
+      "date": "2026-05-22",
+      "fileUrl": "https://ppid.pom.go.id/page/content?i=5007&title=pengajuan-keberatan"
+    },
+    {
+      "id": "DOC-1779437373495",
+      "categoryId": "CAT-1779266644289",
+      "name": "Unit Layanan Pengaduan Konsumen BPOM",
+      "date": "2026-05-22",
+      "fileUrl": "https://ulpk.pom.go.id/id/MM/20191029090049/0.html"
+    },
+    {
+      "id": "DOC-1779437407076",
+      "categoryId": "CAT-1779266644289",
+      "name": "WhistleBlowing System (WBS)",
+      "date": "2026-05-22",
+      "fileUrl": "https://sangintegritas.pom.go.id/"
+    },
+    {
+      "id": "DOC-1779437558664",
+      "categoryId": "CAT-1779266703991",
+      "name": "Pedoman Keselamatan dan Kesehatan Kerja serta Keamanan",
+      "date": "2026-05-22",
+      "size": "8.60 MB",
+      "filePath": "uploads/1779437558646-Pedoman_Keselamatan_dan_Kesehatan_Kerja_serta_Keamanan_.pdf"
+    },
+    {
+      "id": "DOC-1779437605691",
+      "categoryId": "CAT-1779266703991",
+      "name": "Prosedur Keselamatan dan Kesehatan Kerja di Lab",
+      "date": "2026-05-22",
+      "fileUrl": "https://www.youtube.com/watch?v=W83ZDiwyIy8"
+    },
+    {
+      "id": "DOC-1779437639859",
+      "categoryId": "CAT-1779266703991",
+      "name": "Video Evakuasi Keadaan Darurat K3",
+      "date": "2026-05-22",
+      "fileUrl": "https://www.youtube.com/watch?v=8sQZR0Rjw3I"
+    },
+    {
+      "id": "DOC-1779437703150",
+      "categoryId": "CAT-1779266829519",
+      "name": "Laporan Survei Kepuasan Masyarakat",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/layanan#pills-skkm"
     }
   ]
 }
