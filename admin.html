@@ -37,10 +37,39 @@
         .btn-cancel { background: #9ca3af; color: white; width: 100%; margin-top: 8px; }
         .hidden { display: none !important; }
 
-        .table-wrap { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 8px; background: white; }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-        th, td { padding: 12px; border-bottom: 1px solid var(--gray-200); }
-        th { background: var(--gray-100); }
+        .table-wrap { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 8px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; table-layout: fixed; }
+        th, td { padding: 13px 16px; border-bottom: 1px solid var(--gray-200); vertical-align: middle; }
+        th { background: #f8fafc; font-weight: 600; font-size: 0.78rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #f9fafb; }
+
+        /* Lebar kolom tabel dokumen (dalam accordion) */
+        .col-doc-name { width: 50%; word-break: break-word; }
+        .col-doc-info { width: 22%; white-space: nowrap; }
+        .col-doc-act  { width: 28%; text-align: right; white-space: nowrap; }
+
+        /* Lebar kolom tabel kategori */
+        .col-cat-name { width: 22%; }
+        .col-cat-desc { width: 44%; word-break: break-word; }
+        .col-cat-date { width: 14%; white-space: nowrap; }
+        .col-cat-act  { width: 20%; text-align: right; white-space: nowrap; }
+
+        /* Search & Filter */
+        .doc-controls { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+        .doc-controls input, .doc-controls select { flex: 1; width: auto; min-width: 140px; }
+
+        /* Accordion Kategori */
+        .acc-group { border: 1px solid var(--gray-200); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+        .acc-header { display: flex; align-items: center; gap: 10px; padding: 11px 16px; background: #f8fafc; cursor: pointer; user-select: none; transition: background 0.15s; }
+        .acc-header:hover { background: #f1f5f9; }
+        .acc-title { font-weight: 700; font-size: 0.9rem; flex: 1; color: var(--text-dark); }
+        .acc-badge { background: #dbeafe; color: #1d4ed8; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 12px; white-space: nowrap; }
+        .acc-arrow { font-size: 0.7rem; color: var(--text-light); transition: transform 0.2s; display: inline-block; }
+        .acc-group.open .acc-arrow { transform: rotate(180deg); }
+        .acc-body { display: none; }
+        .acc-group.open .acc-body { display: block; }
+        .acc-empty { padding: 20px; text-align: center; color: var(--text-light); font-size: 0.9rem; font-style: italic; }
     </style>
 </head>
 <body>
@@ -90,12 +119,13 @@
             </div>
         </div>
         <div>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>Nama Dokumen</th><th>Kategori</th><th>Info</th><th style="text-align:right;">Aksi</th></tr></thead>
-                    <tbody id="table-body-doc"></tbody>
-                </table>
+            <div class="doc-controls">
+                <input type="text" id="doc-search" placeholder="🔍 Cari nama dokumen..." oninput="applyDocFilter()">
+                <select id="doc-filter-cat" onchange="applyDocFilter()">
+                    <option value="">Semua Kategori</option>
+                </select>
             </div>
+            <div id="doc-accordion"></div>
         </div>
     </div>
 
@@ -126,6 +156,8 @@
 
 <script>
     let globalCategories = [];
+    let globalDocs = [];
+    let openGroups = new Set();
     let activeTab = 'doc';
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -149,10 +181,13 @@
             // Render Dropdown Pilihan Kategori pada form Dokumen
             const select = document.getElementById('docCatId');
             select.innerHTML = '<option value="">-- Pilih Kategori --</option>';
+            const filterSelect = document.getElementById('doc-filter-cat');
+            filterSelect.innerHTML = '<option value="">Semua Kategori</option>';
             cats.forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c.id; opt.textContent = c.name;
                 select.appendChild(opt);
+                filterSelect.appendChild(opt.cloneNode(true));
             });
 
             renderCategoriesTable(cats);
@@ -224,21 +259,83 @@
 
     // --- LOGIKA UTAMA: CRUD DOKUMEN ---
     function renderDocumentsTable(docs) {
-        const tbody = document.getElementById('table-body-doc');
-        tbody.innerHTML = docs.length === 0 ? '<tr><td colspan="4" style="text-align:center;">Belum ada dokumen.</td></tr>' : '';
+        globalDocs = docs;
+        applyDocFilter();
+    }
+
+    function applyDocFilter() {
+        const search = document.getElementById('doc-search').value.toLowerCase().trim();
+        const catFilter = document.getElementById('doc-filter-cat').value;
+
+        let filtered = globalDocs;
+        if (catFilter) filtered = filtered.filter(d => d.categoryId === catFilter);
+        if (search) filtered = filtered.filter(d => d.name.toLowerCase().includes(search));
+
+        renderAccordion(filtered, !!search || !!catFilter);
+    }
+
+    function renderAccordion(docs, autoExpand) {
+        const container = document.getElementById('doc-accordion');
+
+        if (docs.length === 0) {
+            container.innerHTML = '<div class="acc-empty">Tidak ada dokumen yang cocok.</div>';
+            return;
+        }
+
+        // Kelompokkan dokumen per kategori, urutan sesuai globalCategories
+        const grouped = {};
+        globalCategories.forEach(c => { grouped[c.id] = []; });
         docs.forEach(d => {
-            const cat = globalCategories.find(c => c.id === d.categoryId);
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><strong>${d.name}</strong><br><small style="color:var(--text-light)">${d.id}</small></td>
-                <td><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:4px; font-size:12px;">${cat ? cat.name : d.categoryId}</span></td>
-                <td>${d.fileUrl ? '🔗 Tautan Eksternal' : '💾 ' + d.size}<br><small style="color:var(--text-light)">📅 ${d.date}</small></td>
-                <td style="text-align:right; white-space:nowrap;">
-                    <button class="btn-green" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditDoc('${d.id}','${d.name}','${d.categoryId}','${d.date}')">✏️ Edit</button>
-                    <button class="btn-red" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteDoc('${d.id}')">❌ Hapus</button>
-                </td>`;
-            tbody.appendChild(tr);
+            if (grouped[d.categoryId]) grouped[d.categoryId].push(d);
+            else grouped[d.categoryId] = [d];
         });
+
+        container.innerHTML = '';
+        Object.entries(grouped).forEach(([catId, catDocs]) => {
+            if (catDocs.length === 0) return;
+            const cat = globalCategories.find(c => c.id === catId);
+            const catName = cat ? cat.name : catId;
+            const isOpen = autoExpand || openGroups.has(catId);
+
+            const group = document.createElement('div');
+            group.className = 'acc-group' + (isOpen ? ' open' : '');
+            group.id = `acc-${catId}`;
+            group.innerHTML = `
+                <div class="acc-header" onclick="toggleGroup('${catId}')">
+                    <span class="acc-title">📁 ${catName}</span>
+                    <span class="acc-badge">${catDocs.length} dokumen</span>
+                    <span class="acc-arrow">▼</span>
+                </div>
+                <div class="acc-body">
+                    <div class="table-wrap" style="border-radius:0; border:none; border-top:1px solid var(--gray-200); box-shadow:none;">
+                        <table>
+                            <thead><tr>
+                                <th class="col-doc-name">Nama Dokumen</th>
+                                <th class="col-doc-info">Info</th>
+                                <th class="col-doc-act">Aksi</th>
+                            </tr></thead>
+                            <tbody>
+                                ${catDocs.map(d => `
+                                    <tr>
+                                        <td class="col-doc-name"><strong>${d.name}</strong><br><small style="color:var(--text-light);font-family:monospace;">${d.id}</small></td>
+                                        <td class="col-doc-info">${d.fileUrl ? '🔗 Tautan' : '💾 ' + d.size}<br><small style="color:var(--text-light)">📅 ${d.date}</small></td>
+                                        <td class="col-doc-act">
+                                            <button class="btn-green" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditDoc('${d.id}','${d.name.replace(/'/g,"\\'")}','${d.categoryId}','${d.date}')">✏️ Edit</button>
+                                            <button class="btn-red" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteDoc('${d.id}')">❌ Hapus</button>
+                                        </td>
+                                    </tr>`).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>`;
+            container.appendChild(group);
+        });
+    }
+
+    function toggleGroup(catId) {
+        const group = document.getElementById(`acc-${catId}`);
+        if (group.classList.toggle('open')) openGroups.add(catId);
+        else openGroups.delete(catId);
     }
 
     function toggleSource(mode) {
