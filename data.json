@@ -14,7 +14,7 @@
     },
     {
       "id": "CAT-1779266558891",
-      "name": "Ringkasan Kinerja",
+      "name": "Laporan Kinerja",
       "desc": "Memuat dokumen evaluasi capaian target organisasi yang disajikan secara berkala",
       "date": "2026-05-20"
     },
@@ -170,6 +170,104 @@
       "name": "Latar Belakang",
       "date": "2026-05-22",
       "fileUrl": "https://lubuklinggau.pom.go.id/profil#pills-background"
+    },
+    {
+      "id": "DOC-1779435886211",
+      "categoryId": "CAT-1779266578540",
+      "name": "Laporan Keuangan TA 2023",
+      "date": "2026-05-22",
+      "size": "2.56 MB",
+      "filePath": "uploads/1779435886203-CALK_Audited_TA_2023.pdf"
+    },
+    {
+      "id": "DOC-1779435909177",
+      "categoryId": "CAT-1779266578540",
+      "name": "Laporan Keuangan TA 2024",
+      "date": "2026-05-22",
+      "size": "2.44 MB",
+      "filePath": "uploads/1779435909158-CALK_AUDITED_2024.pdf"
+    },
+    {
+      "id": "DOC-1779435930208",
+      "categoryId": "CAT-1779266578540",
+      "name": "Laporan Keuangan TA 2025",
+      "date": "2026-05-22",
+      "size": "2.42 MB",
+      "filePath": "uploads/1779435930194-CALK_TA_2025_(Audited)_LUBUKLINGGAU_fix.pdf"
+    },
+    {
+      "id": "DOC-1779435993685",
+      "categoryId": "CAT-1779266772202",
+      "name": "Laporan Tahunan 2024",
+      "date": "2026-05-22",
+      "size": "4.39 MB",
+      "filePath": "uploads/1779435993676-Laporan_Tahunan_2024_Loka_POM_di_Kota_Lubuklinggau.pdf"
+    },
+    {
+      "id": "DOC-1779436035736",
+      "categoryId": "CAT-1779266772202",
+      "name": "Laporan Tahunan 2025",
+      "date": "2026-05-22",
+      "size": "7.23 MB",
+      "filePath": "uploads/1779436035708-LAPTAH_2025_REVISI_compressed.pdf"
+    },
+    {
+      "id": "DOC-1779436159193",
+      "categoryId": "CAT-1779266558891",
+      "name": "Laporan Kinerja TA 2023",
+      "date": "2026-05-22",
+      "size": "5.29 MB",
+      "filePath": "uploads/1779436159182-Lapkin_TA_2023.pdf"
+    },
+    {
+      "id": "DOC-1779436248467",
+      "categoryId": "CAT-1779266558891",
+      "name": "Laporan Kinerja TA 2025",
+      "date": "2026-05-22",
+      "size": "5.64 MB",
+      "filePath": "uploads/1779436248456-Lapkin_2025.pdf"
+    },
+    {
+      "id": "DOC-1779436352168",
+      "categoryId": "CAT-1779266521215",
+      "name": "Visi dan Misi",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/profil#pills-visimisi"
+    },
+    {
+      "id": "DOC-1779436370619",
+      "categoryId": "CAT-1779266521215",
+      "name": "Budaya Organisasi",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/profil#pills-budaya"
+    },
+    {
+      "id": "DOC-1779436392691",
+      "categoryId": "CAT-1779266521215",
+      "name": "Tugas dan Fungsi",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/profil#pills-tugas"
+    },
+    {
+      "id": "DOC-1779436410863",
+      "categoryId": "CAT-1779266521215",
+      "name": "Struktur Organisasi",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/profil#pills-struktur"
+    },
+    {
+      "id": "DOC-1779436430121",
+      "categoryId": "CAT-1779266521215",
+      "name": "Profil Pimpinan",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/profil#pills-profil"
+    },
+    {
+      "id": "DOC-1779436449893",
+      "categoryId": "CAT-1779266521215",
+      "name": "Employee Of The Month",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/profil/eotm"
     }
   ]
 }
