@@ -71,7 +71,19 @@
                     <div class="form-group"><label>Nama Dokumen</label><input type="text" id="docName" required></div>
                     <div class="form-group"><label>Kategori</label><select id="docCatId" required><option value="">-- Pilih Kategori --</option></select></div>
                     <div class="form-group"><label>Tanggal</label><input type="date" id="docDate" required></div>
+                    <div class="form-group" id="source-toggle-container">
+                        <label>Sumber Berkas</label>
+                        <div style="display:flex; gap:16px; margin-top:4px;">
+                            <label style="display:flex; align-items:center; gap:6px; font-weight:normal; cursor:pointer;">
+                                <input type="radio" name="docSource" value="upload" id="source-upload" checked onchange="toggleSource('upload')"> Upload File
+                            </label>
+                            <label style="display:flex; align-items:center; gap:6px; font-weight:normal; cursor:pointer;">
+                                <input type="radio" name="docSource" value="url" id="source-url" onchange="toggleSource('url')"> Input URL
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group" id="file-container"><label>File Berkas</label><input type="file" id="document" required></div>
+                    <div class="form-group hidden" id="url-container"><label>URL Dokumen</label><input type="url" id="docUrl" placeholder="https://example.com/dokumen.pdf"></div>
                     <button type="submit" class="btn-blue" id="btn-submit-doc">Simpan Dokumen</button>
                     <button type="button" class="btn-cancel hidden" id="btn-clear-doc" onclick="clearDocForm()">Batal</button>
                 </form>
@@ -220,13 +232,21 @@
             tr.innerHTML = `
                 <td><strong>${d.name}</strong><br><small style="color:var(--text-light)">${d.id}</small></td>
                 <td><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:4px; font-size:12px;">${cat ? cat.name : d.categoryId}</span></td>
-                <td>💾 ${d.size}<br><small style="color:var(--text-light)">📅 ${d.date}</small></td>
+                <td>${d.fileUrl ? '🔗 Tautan Eksternal' : '💾 ' + d.size}<br><small style="color:var(--text-light)">📅 ${d.date}</small></td>
                 <td style="text-align:right; white-space:nowrap;">
                     <button class="btn-green" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditDoc('${d.id}','${d.name}','${d.categoryId}','${d.date}')">✏️ Edit</button>
                     <button class="btn-red" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteDoc('${d.id}')">❌ Hapus</button>
                 </td>`;
             tbody.appendChild(tr);
         });
+    }
+
+    function toggleSource(mode) {
+        const isUpload = mode === 'upload';
+        document.getElementById('file-container').classList.toggle('hidden', !isUpload);
+        document.getElementById('url-container').classList.toggle('hidden', isUpload);
+        document.getElementById('document').required = isUpload;
+        document.getElementById('docUrl').required = !isUpload;
     }
 
     function saveDocument(e) {
@@ -245,14 +265,27 @@
                 body: JSON.stringify(payload)
             }).then(res => res.json()).then(res => { alert(res.message); clearDocForm(); initData(); });
         } else {
-            const formData = new FormData();
-            formData.append('docName', document.getElementById('docName').value);
-            formData.append('categoryId', document.getElementById('docCatId').value);
-            formData.append('docDate', document.getElementById('docDate').value);
-            formData.append('document', document.getElementById('document').files[0]);
+            const sourceMode = document.querySelector('input[name="docSource"]:checked').value;
 
-            fetch('/api/documents', { method: 'POST', body: formData })
-                .then(res => res.json()).then(res => { alert(res.message); clearDocForm(); initData(); });
+            if (sourceMode === 'url') {
+                const urlVal = document.getElementById('docUrl').value.trim();
+                if (!urlVal) { alert('URL dokumen tidak boleh kosong.'); return; }
+                const formData = new FormData();
+                formData.append('docName', document.getElementById('docName').value);
+                formData.append('categoryId', document.getElementById('docCatId').value);
+                formData.append('docDate', document.getElementById('docDate').value);
+                formData.append('docUrl', urlVal);
+                fetch('/api/documents', { method: 'POST', body: formData })
+                    .then(res => res.json()).then(res => { alert(res.message); clearDocForm(); initData(); });
+            } else {
+                const formData = new FormData();
+                formData.append('docName', document.getElementById('docName').value);
+                formData.append('categoryId', document.getElementById('docCatId').value);
+                formData.append('docDate', document.getElementById('docDate').value);
+                formData.append('document', document.getElementById('document').files[0]);
+                fetch('/api/documents', { method: 'POST', body: formData })
+                    .then(res => res.json()).then(res => { alert(res.message); clearDocForm(); initData(); });
+            }
         }
     }
 
@@ -261,8 +294,11 @@
         document.getElementById('docName').value = name;
         document.getElementById('docCatId').value = catId;
         document.getElementById('docDate').value = date;
+        document.getElementById('source-toggle-container').classList.add('hidden');
         document.getElementById('file-container').classList.add('hidden');
+        document.getElementById('url-container').classList.add('hidden');
         document.getElementById('document').required = false;
+        document.getElementById('docUrl').required = false;
         document.getElementById('doc-form-title').innerText = "Edit Informasi Dokumen";
         document.getElementById('btn-submit-doc').innerText = "Perbarui Dokumen";
         document.getElementById('btn-clear-doc').classList.remove('hidden');
@@ -272,8 +308,12 @@
         document.getElementById('edit-doc-id').value = '';
         document.getElementById('doc-form').reset();
         document.getElementById('docDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('source-upload').checked = true;
+        document.getElementById('source-toggle-container').classList.remove('hidden');
         document.getElementById('file-container').classList.remove('hidden');
+        document.getElementById('url-container').classList.add('hidden');
         document.getElementById('document').required = true;
+        document.getElementById('docUrl').required = false;
         document.getElementById('doc-form-title').innerText = "Tambah Dokumen";
         document.getElementById('btn-submit-doc').innerText = "Simpan Dokumen";
         document.getElementById('btn-clear-doc').classList.add('hidden');

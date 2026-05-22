@@ -601,10 +601,11 @@
 
     function previewItem(id) {
         const doc = database.documents.find(d => d.id === id);
-        if (doc && doc.filePath) {
-            window.open(doc.filePath, '_blank');
+        const target = doc && (doc.fileUrl || doc.filePath);
+        if (target) {
+            window.open(target, '_blank');
         } else {
-            alert(`Berkas fisik untuk ID: ${id} tidak ditemukan di repositori lokal.`);
+            alert(`Berkas untuk ID: ${id} tidak ditemukan.`);
         }
     }
 

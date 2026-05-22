@@ -107,7 +107,69 @@
       "name": "Standar Pelayanan Publik",
       "desc": "Berisi tolok ukur atau acuan baku yang maklumatnya wajib dipatuhi dalam penyelenggaraan pelayanan publik di lingkungan Balai POM di Lubuklinggau sebagai jaminan kepastian bagi penerima layanan.",
       "date": "2026-05-20"
+    },
+    {
+      "id": "CAT-1779432260214",
+      "name": "Laporan BMN",
+      "desc": "Berisi dokumen pertanggungjawaban resmi yang memuat informasi mengenai status, kondisi, dan nilai seluruh aset kekayaan negara yang dikelola oleh instansi pemerintah",
+      "date": "2026-05-22"
     }
   ],
-  "documents": []
+  "documents": [
+    {
+      "id": "DOC-1779432884136",
+      "categoryId": "CAT-1779432260214",
+      "name": "Laporan BMN TA 2021",
+      "size": "9.28 MB",
+      "date": "2026-05-22",
+      "filePath": "uploads/1779432884075-LAPORAN_BMN_TA_2021_AUDITED_LOKA_POM_DI_KOTA_LUBUKLINGGAU.pdf"
+    },
+    {
+      "id": "DOC-1779432940008",
+      "categoryId": "CAT-1779432260214",
+      "name": "Laporan BMN TA 2022",
+      "size": "7.73 MB",
+      "date": "2026-05-22",
+      "filePath": "uploads/1779432939982-Laporan_BMN_TA_2022.pdf"
+    },
+    {
+      "id": "DOC-1779432968854",
+      "categoryId": "CAT-1779432260214",
+      "name": "Laporan BMN TA 2023",
+      "size": "2.13 MB",
+      "date": "2026-05-22",
+      "filePath": "uploads/1779432968849-Laporan_BMN_Tahunan_TA_2023_Audited.pdf"
+    },
+    {
+      "id": "DOC-1779433006507",
+      "categoryId": "CAT-1779432260214",
+      "name": "Laporan BMN TA 2024",
+      "size": "3.18 MB",
+      "date": "2026-05-22",
+      "filePath": "uploads/1779433006493-Laporan_BMN_TA_2024.pdf"
+    },
+    {
+      "id": "DOC-1779433047660",
+      "categoryId": "CAT-1779432260214",
+      "name": "Laporan BMN TA 2025",
+      "size": "8.06 MB",
+      "date": "2026-05-22",
+      "filePath": "uploads/1779433047634-Laporan_BMN_TA_2025.pdf"
+    },
+    {
+      "id": "DOC-1779433125887",
+      "categoryId": "CAT-1779266578540",
+      "name": "Laporan Keuangan TA 2022",
+      "size": "2.45 MB",
+      "date": "2026-05-22",
+      "filePath": "uploads/1779433125881-CALK_TA_2022_Fix.pdf"
+    },
+    {
+      "id": "DOC-1779434634567",
+      "categoryId": "CAT-1779266521215",
+      "name": "Latar Belakang",
+      "date": "2026-05-22",
+      "fileUrl": "https://lubuklinggau.pom.go.id/profil#pills-background"
+    }
+  ]
 }

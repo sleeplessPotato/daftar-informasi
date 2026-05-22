@@ -96,16 +96,27 @@ app.get('/api/documents', (req, res) => {
 });
 
 app.post('/api/documents', upload.single('document'), (req, res) => {
-    if (!req.file) return res.status(400).json({ success: false, message: 'File wajib dilampirkan.' });
     const db = readDB();
+    const docUrl = req.body.docUrl ? req.body.docUrl.trim() : '';
+
+    if (!req.file && !docUrl) {
+        return res.status(400).json({ success: false, message: 'File atau URL dokumen wajib diisi.' });
+    }
+
     const newDoc = {
         id: `DOC-${Date.now()}`,
         categoryId: req.body.categoryId,
         name: req.body.docName,
-        size: (req.file.size / (1024 * 1024)).toFixed(2) + ' MB',
-        date: req.body.docDate || new Date().toISOString().split('T')[0],
-        filePath: `uploads/${req.file.filename}`
+        date: req.body.docDate || new Date().toISOString().split('T')[0]
     };
+
+    if (req.file) {
+        newDoc.size = (req.file.size / (1024 * 1024)).toFixed(2) + ' MB';
+        newDoc.filePath = `uploads/${req.file.filename}`;
+    } else {
+        newDoc.fileUrl = docUrl;
+    }
+
     db.documents.push(newDoc);
     writeDB(db);
     res.json({ success: true, message: 'Dokumen berhasil ditambahkan.' });
