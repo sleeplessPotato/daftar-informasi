@@ -219,13 +219,11 @@
         body.is-mobile .col-doc-act  { padding-top: 2px !important; }
 
         /* Pagination stack vertikal */
-        body.is-mobile #pagination-panel,
         body.is-mobile #detail-pagination {
             flex-direction: column !important;
             align-items: stretch !important;
             gap: 8px !important;
         }
-        body.is-mobile #pagination-panel #page-info,
         body.is-mobile #detail-pagination #detail-info { margin-right: 0; text-align: center; }
 
         /* Tetap pertahankan media query sebagai fallback untuk akses langsung */
@@ -257,13 +255,6 @@
         </div>
 
         <div id="accordion-container"></div>
-
-        <div id="pagination-panel" style="display:none; align-items:center; justify-content:flex-end; gap:12px; margin-top:20px; padding-top:16px; border-top:1px solid var(--border); flex-wrap:wrap;">
-            <span id="page-info" style="margin-right:auto; color:var(--text-muted); font-size:0.875rem;"></span>
-            <button class="btn-nav" id="btn-prev" onclick="changePage(-1)">← Sebelumnya</button>
-            <span id="page-text" style="font-size:0.875rem; font-weight:600; color:var(--text-main); background:#f1f5f9; padding:6px 12px; border-radius:6px; white-space:nowrap;"></span>
-            <button class="btn-nav" id="btn-next" onclick="changePage(1)">Berikutnya →</button>
-        </div>
     </div>
 
     <!-- VIEW DETAIL: TABEL PENUH (untuk kategori >10 dokumen) -->
@@ -300,8 +291,6 @@
 <script>
     let database = { categories: [], documents: [] };
     let openGroups = new Set();
-    const PAGE_SIZE = 8; // jumlah grup kategori per halaman
-    let currentPage = 1;
     let filteredGroups = []; // [{cat, docs}] setelah filter
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -339,7 +328,6 @@
     }
 
     function applyFilter() {
-        currentPage = 1;
         const search = document.getElementById('search-input').value.toLowerCase().trim();
         const catFilter = document.getElementById('filter-cat').value;
         const isFiltering = !!search || !!catFilter;
@@ -369,18 +357,11 @@
 
         if (filteredGroups.length === 0) {
             container.innerHTML = '<div style="text-align:center;padding:48px;color:var(--text-ghost);font-weight:500;">Tidak ada dokumen yang cocok.</div>';
-            updatePagination(0);
             return;
         }
 
-        const maxPage = Math.ceil(filteredGroups.length / PAGE_SIZE) || 1;
-        if (currentPage > maxPage) currentPage = maxPage;
-
-        const start = (currentPage - 1) * PAGE_SIZE;
-        const pageGroups = autoExpand ? filteredGroups : filteredGroups.slice(start, start + PAGE_SIZE);
-
         container.innerHTML = '';
-        pageGroups.forEach(({ cat, docs }) => {
+        filteredGroups.forEach(({ cat, docs }) => {
             const isLarge = docs.length > INLINE_LIMIT;
             const isOpen = autoExpand || openGroups.has(cat.id);
             const previewDocs = isLarge ? docs.slice(0, 5) : docs;
@@ -427,25 +408,6 @@
                 </div>`;
             container.appendChild(group);
         });
-
-        updatePagination(autoExpand ? 0 : filteredGroups.length);
-    }
-
-    function updatePagination(total) {
-        const panel = document.getElementById('pagination-panel');
-        if (total <= PAGE_SIZE) { panel.style.display = 'none'; return; }
-        panel.style.display = 'flex';
-        const maxPage = Math.ceil(total / PAGE_SIZE);
-        document.getElementById('page-info').textContent = `${filteredGroups.length} kategori`;
-        document.getElementById('page-text').textContent = `${currentPage} / ${maxPage}`;
-        document.getElementById('btn-prev').disabled = currentPage === 1;
-        document.getElementById('btn-next').disabled = currentPage === maxPage;
-    }
-
-    function changePage(dir) {
-        const maxPage = Math.ceil(filteredGroups.length / PAGE_SIZE);
-        const next = currentPage + dir;
-        if (next >= 1 && next <= maxPage) { currentPage = next; renderPage(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     }
 
     function toggleGroup(catId) {
