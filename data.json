@@ -550,6 +550,38 @@
       "date": "2026-05-25",
       "size": "4.93 MB",
       "filePath": "uploads/1779695759052-TWIV.pdf"
+    },
+    {
+      "id": "DOC-1789961406381",
+      "categoryId": "CAT-1779266558891",
+      "name": "Laporan Kinerja TW III TA 2025",
+      "date": "2026-09-21",
+      "size": "18.02 MB",
+      "filePath": "uploads/1789961406162-Untitled.pdf"
+    },
+    {
+      "id": "DOC-1789961438874",
+      "categoryId": "CAT-1779266558891",
+      "name": "Laporan Kinerja TW I TA 2026",
+      "date": "2026-09-21",
+      "size": "9.65 MB",
+      "filePath": "uploads/1789961438760-LAPORAN_KINERJA_INTERIM_TW_I_TA_2026_(2).pdf"
+    },
+    {
+      "id": "DOC-1789961464565",
+      "categoryId": "CAT-1779266558891",
+      "name": "Laporan Kinerja TW II TA 2026",
+      "date": "2026-09-21",
+      "size": "9.47 MB",
+      "filePath": "uploads/1789961464469-LAPORAN_KINERJA_INTERIM_TW_II_TA_2026_(1).pdf"
+    },
+    {
+      "id": "DOC-1789961594847",
+      "categoryId": "CAT-1779266558891",
+      "name": "Revisi. Laporan kinerja Tahunan TA 2025",
+      "date": "2026-09-21",
+      "size": "7.46 MB",
+      "filePath": "uploads/1789961594788-Lapkin_2025_ok.pdf"
     }
   ]
 }
